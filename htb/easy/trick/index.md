@@ -3,7 +3,7 @@ layout: default
 title: Trick
 parent: Easy
 grand_parent: Hack The Box
-nav_order: 3
+nav_order: 2
 ---
 
 # Trick
