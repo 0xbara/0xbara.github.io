@@ -18,5 +18,5 @@ I hope that through my work, I can inspire others to explore their interests and
 
 ## Contact
 
-* E-mail: [baranowskiagustin@gmail.com](mailto:baranowskiagustin@gmail.com)
+* E-mail: [0xbara@wearehackerone.com](mailto:0xbara@wearehackerone.com)
 * Discord: **bara#8191**
