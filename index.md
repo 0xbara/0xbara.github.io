@@ -20,6 +20,3 @@ I hope that through my work, I can inspire others to explore their interests and
 
 * E-mail: [0xbara@wearehackerone.com](mailto:0xbara@wearehackerone.com)
 * Discord: **bara#8191**
-
-
-Esta es una prueba
