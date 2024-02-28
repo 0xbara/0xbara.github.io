@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 # Fawn
-
+#FTP #Protocols #Reconnaissance #Anonymous/GuestAccess
 ## Nmap Scan
 
 ```bash

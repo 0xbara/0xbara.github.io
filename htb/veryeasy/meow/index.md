@@ -7,7 +7,7 @@ nav_order: 1
 ---
 
 # Meow
-
+#Telnet #Protocols #Reconnaissance #WeakCredentials #Misconfiguration
 ## Nmap Scan
 
 ```bash

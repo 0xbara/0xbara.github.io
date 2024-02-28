@@ -7,6 +7,7 @@ nav_order: 3
 ---
 
 # Dancing
+#Protocols #SMB #Reconnaissance #Anonymous/GuestAccess 
 
 ## Nmap Scan
 
