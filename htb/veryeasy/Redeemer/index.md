@@ -13,7 +13,7 @@ tags:
 ---
 # Redeemer
 
-You can watch the resolution in video ![here](https://youtu.be/MS4tawenbWw)
+You can watch the resolution in video ![here](https://www.youtube.com/watch?v=MS4tawenbWw)
 
 ### Which TCP port is open on the machine?
 
