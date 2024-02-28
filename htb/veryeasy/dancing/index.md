@@ -4,10 +4,14 @@ title: Dancing
 parent: Very Easy
 grand_parent: Hack The Box
 nav_order: 3
+tags:
+  - Protocols
+  - "#SMB"
+  - "#Reconnaissance"
+  - Anonymous/GuestAccess
 ---
 
 # Dancing
-#Protocols #SMB #Reconnaissance #Anonymous/GuestAccess 
 
 ## Nmap Scan
 

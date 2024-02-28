@@ -4,10 +4,15 @@ title: Fawn
 parent: Very Easy
 grand_parent: Hack The Box
 nav_order: 2
+tags:
+  - FTP
+  - Protocols
+  - "#Reconnaissance"
+  - Anonymous/GuestAccess
 ---
 
 # Fawn
-#FTP #Protocols #Reconnaissance #Anonymous/GuestAccess
+
 ## Nmap Scan
 
 ```bash

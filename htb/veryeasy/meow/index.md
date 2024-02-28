@@ -4,10 +4,17 @@ title: Meow
 parent: Very Easy
 grand_parent: Hack The Box
 nav_order: 1
+tags:
+  - Telnet
+  - "#Protocols"
+  - Reconnaissance
+  - "#WeakCredentials"
+  - Misconfiguration
 ---
 
 # Meow
-#Telnet #Protocols #Reconnaissance #WeakCredentials #Misconfiguration
+
+
 ## Nmap Scan
 
 ```bash
