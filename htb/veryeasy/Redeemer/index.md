@@ -13,9 +13,9 @@ tags:
 ---
 # Redeemer
 
-You can watch the resolution in video ![here](https://www.youtube.com/watch?v=MS4tawenbWw)
+You can watch the resolution in video ![here](https://youtu.be/MS4tawenbWw?si=5idMoyPPSrUenJnK)
 
-### Which TCP port is open on the machine?
+## Which TCP port is open on the machine?
 
 ```
 ❯ nmap -p- --open --min-rate 5000 -sS -n -Pn 10.10.10.10
@@ -23,17 +23,17 @@ You can watch the resolution in video ![here](https://www.youtube.com/watch?v=MS
 6379/tcp open  redis   syn-ack ttl 63
 ```
 
-### Which service is running on the port that is open on the machine?
+## Which service is running on the port that is open on the machine?
 
 ```
 6379/tcp open  **redis**   syn-ack ttl 63
 ```
 
-### What type of database is Redis? Choose from the following options: (i) In-memory Database, (ii) Traditional Database
+## What type of database is Redis? Choose from the following options: (i) In-memory Database, (ii) Traditional Database
 
 ![](./images/1.png)
 
-### Which command-line utility is used to interact with the Redis server? Enter the program name you would enter into the terminal without any arguments.
+## Which command-line utility is used to interact with the Redis server? Enter the program name you would enter into the terminal without any arguments.
 
 ```
 ❯ apt install redis
@@ -49,7 +49,7 @@ The following NEW packages will be installed:
 ❯ redis-cli
 ```
 
-### Which flag is used with the Redis command-line utility to specify the hostname?
+## Which flag is used with the Redis command-line utility to specify the hostname?
 
 ```
 ❯ redis-cli --help
@@ -79,7 +79,7 @@ Usage: redis-cli [OPTIONS] [cmd [arg [arg ...]]]
 [SNIP]
 ```
 
-### Once connected to a Redis server, which command is used to obtain the information and statistics about the Redis server?
+## Once connected to a Redis server, which command is used to obtain the information and statistics about the Redis server?
 
 ```
 ❯ redis-cli -h 10.129.124.104
@@ -94,13 +94,13 @@ os:Linux 5.4.0-77-generic x86_64
 [SNIP]
 ```
 
-### What is the version of the Redis server being used on the target machine?
+## What is the version of the Redis server being used on the target machine?
 
 ```
 redis_version:5.0.7
 ```
 
-### Which command is used to select the desired database in Redis?
+## Which command is used to select the desired database in Redis?
 
 ```
 10.129.124.104:6379> INFO keyspace
@@ -110,13 +110,13 @@ db0:keys=4,expires=0,avg_ttl=0
 OK
 ```
 
-### How many keys are present inside the database with index 0?
+## How many keys are present inside the database with index 0?
 
 ```
 db0:keys=4
 ```
 
-### Which command is used to obtain all the keys in a database?
+## Which command is used to obtain all the keys in a database?
 
 ```
 10.129.124.104:6379> keys *
@@ -126,7 +126,7 @@ db0:keys=4
 4) "stor"
 ```
 
-### Submit root flag
+## Submit root flag
 
 ```
 10.129.124.104:6379> keys *
