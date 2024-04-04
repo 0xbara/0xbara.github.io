@@ -110,5 +110,6 @@ Both of these are non-salted SHA256 hashes, and both are already cracked in [Cr
 ![](images/cypher3.webp)
 
 References: 
-- https://0xdf.gitlab.io/2023/08/26/htb-onlyforyou.html#cypher-injection
-- https://app.hackthebox.com/machines/540
+
+* https://0xdf.gitlab.io/2023/08/26/htb-onlyforyou.html#cypher-injection
+* https://app.hackthebox.com/machines/540
