@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "docs/CTF/index.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "docs/CTF/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "docs/CTF/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "docs/CTF/index.md"
               }
             }
           }
@@ -147,5 +147,22 @@
     }
   },
   "active": "517bdbfcb4e89f7c",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "docs/index.md",
+    "docs/CTF/index.md",
+    "docs/CTF/index",
+    "docs/CTF",
+    "docs/assets/images/logo.png",
+    "docs/assets/images/favicon.ico",
+    "docs/assets/images",
+    "docs/assets/logo.png",
+    "docs/assets/favicon.ico",
+    "docs/assets",
+    "docs/favicon.ico",
+    "favicon.ico",
+    "site/search/search_index.json",
+    "site/search",
+    "site/assets/images/favicon.png",
+    "README.md"
+  ]
 }

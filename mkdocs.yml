@@ -1,0 +1,32 @@
+site_name: 0xbara
+theme:
+  logo: assets/images/logo.png
+  name: material
+  language: en
+  favicon: assets/images/favicon.ico
+  # Icons
+  icon:
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+  # Features
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+  # Colors
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
