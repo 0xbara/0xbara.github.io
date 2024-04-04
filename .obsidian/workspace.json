@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/CTF/index.md",
+                "file": "docs/CTF/HackTheBox/index.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/CTF/index.md",
+                "file": "docs/CTF/HackTheBox/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/CTF/index.md",
+                "file": "docs/CTF/HackTheBox/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/CTF/index.md"
+                "file": "docs/CTF/HackTheBox/index.md"
               }
             }
           }
@@ -148,20 +148,36 @@
   },
   "active": "517bdbfcb4e89f7c",
   "lastOpenFiles": [
-    "docs/index.md",
+    "docs/Bug Bounty/index.md",
     "docs/CTF/index.md",
-    "docs/CTF/index",
+    "docs/CTF/HackTheBox/index.md",
+    "docs/CTF/HackTheBox/AppSanity.md",
+    "docs/CTF/Tutorials",
+    "docs/CTF/HackTheBox",
     "docs/CTF",
+    "docs/⚑CTF/HackTheBox/AppSanity.md",
+    "docs/⚑CTF/HackTheBox/index.md",
+    "docs/⚑CTF/Tutorials",
+    "docs/Bug Bounty/Reconassiance.md",
+    "docs/Bug Bounty",
+    "docs/⚑CTF/index.md",
+    "docs/index.md",
+    "docs/🧑index.md",
+    "docs/⚑CTF/HackTheBox",
+    "docs/⚑CTF/&#xf434;HackTheBox",
+    "docs/🕷Bug Bounty/Reconassiance.md",
+    "docs/🕷Bug Bounty",
+    "docs/Bug Bounty/Reconassiance.md",
+    "docs/Bug Bounty",
+    "docs/⚑CTF/test.md",
+    "docs/⚑CTF/test",
+    "docs/🕷️Bug Bounty/Reconassiance.md",
+    "docs/🐞Bug Bounty/Reconassiance.md",
+    "docs/👽 Bug Bounty/Reconassiance.md",
+    "docs/Bug Bounty :octicons-package-24: /Reconassiance.md",
+    "docs/Bug Bounty/Recon.md",
     "docs/assets/images/logo.png",
-    "docs/assets/images/favicon.ico",
-    "docs/assets/images",
     "docs/assets/logo.png",
-    "docs/assets/favicon.ico",
-    "docs/assets",
-    "docs/favicon.ico",
-    "favicon.ico",
-    "site/search/search_index.json",
-    "site/search",
     "site/assets/images/favicon.png",
     "README.md"
   ]
