@@ -25,10 +25,16 @@ theme:
     - navigation.expand
     - navigation.tracking
     - navigation.top
+    - navigation.footer
     - search
     - search.suggest
     - search.highlight
     - search.share
+    - header.autohide
+  # Plugins
+  plugins:
+    - projects
+    - optimize
   # Colors
   palette:
     # Palette toggle for light mode
@@ -78,3 +84,13 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 # Other
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/0xbara
+    - icon: simple/twitter
+      link: https://x.com/0xbara
+    - icon: simple/hackerone
+      link: https://hackerone.com/0xbara
+    - icon: simple/linkedin
+      link: https://www.linkedin.com/in/agustinbaranowski/
