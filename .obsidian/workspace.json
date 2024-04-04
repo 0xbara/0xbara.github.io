@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Hacking/index.md",
+                "file": "docs/Hacking/Web/Cypher Injection.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/Hacking/index.md",
+                "file": "docs/Hacking/Web/Cypher Injection.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/Hacking/index.md",
+                "file": "docs/Hacking/Web/Cypher Injection.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/Hacking/index.md"
+                "file": "docs/Hacking/Web/Cypher Injection.md"
               }
             }
           }
@@ -146,8 +146,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6e03578bd7486690",
+  "active": "517bdbfcb4e89f7c",
   "lastOpenFiles": [
+    "docs/Tutorials/GitHub Pages with Obsidian.md",
+    "docs/Hacking/Web/Cypher Injection.md",
+    "docs/Hacking/index.md",
     "docs/Hacking/Pwn/index.md",
     "docs/Hacking/Web/index.md",
     "docs/Hacking/Windows/index.md",
@@ -160,7 +163,6 @@
     "docs/Tutorials/How to Burp Suite.md",
     "docs/Tutorials/How to Buffer Overflow.md",
     "docs/Tutorials/How to Blood Hound.md",
-    "docs/Tutorials/GitHub Pages with Obsidian.md",
     "docs/CTF/PortSwigger/index.md",
     "docs/CTF/PortSwigger",
     "docs/Hacking/Active Directory",
@@ -168,7 +170,6 @@
     "docs/Hacking/Linux",
     "docs/Hacking/Pwn",
     "docs/Hacking/Web",
-    "docs/Hacking/index.md",
     "docs/Hacking",
     "docs/CTF/index.md",
     "docs/CTF/HackTheBox/index.md",
@@ -183,7 +184,6 @@
     "docs/🧑index.md",
     "docs/🕷Bug Bounty/Reconassiance.md",
     "docs/Bug Bounty/Reconassiance.md",
-    "docs/⚑CTF/test.md",
     "docs/assets/images/logo.png",
     "docs/assets/logo.png",
     "site/assets/images/favicon.png"
