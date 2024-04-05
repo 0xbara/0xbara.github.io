@@ -134,3 +134,7 @@ $1 = {<text variable, no debug info>} 0x4011d6 <under_construction>
 Great job! It's high time you solved your first challenge! Here is the flag!
 
 **HTB{w4rm35t_\*\*\*\*\*\*\_3v3r}**
+
+Reference:
+
+- https://app.hackthebox.com/challenges/Lesson
