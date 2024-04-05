@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Hacking/Web/Abusing No Redirects.md",
+                "file": "docs/CTF/HackTheBox/Challenges/Lesson.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/Hacking/Web/Abusing No Redirects.md",
+                "file": "docs/CTF/HackTheBox/Challenges/Lesson.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/Hacking/Web/Abusing No Redirects.md",
+                "file": "docs/CTF/HackTheBox/Challenges/Lesson.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/Hacking/Web/Abusing No Redirects.md"
+                "file": "docs/CTF/HackTheBox/Challenges/Lesson.md"
               }
             }
           }
@@ -148,12 +148,16 @@
   },
   "active": "517bdbfcb4e89f7c",
   "lastOpenFiles": [
-    "docs/Hacking/Web/Cypher Injection.md",
+    "docs/CTF/HackTheBox/Challenges/index.md",
+    "docs/CTF/HackTheBox/Challenges/Lesson.md",
+    "docs/Hacking/Pwn/index.md",
+    "docs/CTF/HackTheBox/Challenges",
+    "docs/CTF/HackTheBox/Challenge",
     "docs/Hacking/Web/Abusing No Redirects.md",
+    "docs/Hacking/Web/Cypher Injection.md",
     "docs/Hacking/Web/File Inclusion.md",
     "docs/Tutorials/GitHub Pages with Obsidian.md",
     "docs/Hacking/index.md",
-    "docs/Hacking/Pwn/index.md",
     "docs/Hacking/Web/index.md",
     "docs/Hacking/Windows/index.md",
     "docs/Hacking/Linux/index.md",
@@ -175,15 +179,11 @@
     "docs/Hacking",
     "docs/CTF/index.md",
     "docs/CTF/HackTheBox/index.md",
-    "docs/Tutorials",
     "docs/Bug Bounty/index.md",
     "docs/CTF/HackTheBox/AppSanity.md",
-    "docs/CTF/Tutorials",
     "docs/⚑CTF/HackTheBox/AppSanity.md",
     "docs/⚑CTF/HackTheBox/index.md",
     "docs/Bug Bounty/Reconassiance.md",
-    "docs/⚑CTF/index.md",
-    "docs/🧑index.md",
     "docs/assets/images/logo.png",
     "docs/assets/logo.png",
     "site/assets/images/favicon.png"
