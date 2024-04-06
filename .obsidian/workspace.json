@@ -4,34 +4,49 @@
     "type": "split",
     "children": [
       {
-        "id": "35ad1f074d2a2be2",
-        "type": "tabs",
+        "id": "845155dbd134e9d1",
+        "type": "split",
         "children": [
           {
-            "id": "517bdbfcb4e89f7c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/CTF/HackTheBox/Challenges/Questionnaire.md",
-                "mode": "source",
-                "source": false
+            "id": "06179c878921833b",
+            "type": "tabs",
+            "dimension": 51.52919369786839,
+            "children": [
+              {
+                "id": "5a92137de1a3329c",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "docs/CTF/HackTheBox/Challenges/Getting Started.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
               }
-            }
+            ]
           },
           {
-            "id": "4e87856bbb2426d3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/CTF/HackTheBox/Challenges/Lesson.md",
-                "mode": "source",
-                "source": false
+            "id": "38c21a5a900d1289",
+            "type": "tabs",
+            "dimension": 48.4708063021316,
+            "children": [
+              {
+                "id": "d0ab0d95cbb59168",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "docs/CTF/HackTheBox/Challenges/Getting Started.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
               }
-            }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -97,7 +112,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/CTF/HackTheBox/Challenges/Questionnaire.md",
+                "file": "docs/CTF/HackTheBox/Challenges/Getting Started.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +129,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/CTF/HackTheBox/Challenges/Questionnaire.md",
+                "file": "docs/CTF/HackTheBox/Challenges/Getting Started.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/CTF/HackTheBox/Challenges/Questionnaire.md"
+                "file": "docs/CTF/HackTheBox/Challenges/Getting Started.md"
               }
             }
           },
@@ -170,22 +185,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "517bdbfcb4e89f7c",
+  "active": "5a92137de1a3329c",
   "lastOpenFiles": [
+    "docs/CTF/HackTheBox/Challenges/Space pirate - Entrypoint.md",
+    "docs/Bug Bounty/index.md",
+    "docs/CTF/HackTheBox/Challenges/Getting Started.md",
     "docs/CTF/HackTheBox/Challenges/Lesson.md",
     "docs/CTF/HackTheBox/Challenges/Questionnaire.md",
-    "docs/Hacking/Web/Cypher Injection.md",
     "docs/CTF/HackTheBox/Challenges/index.md",
+    "docs/Hacking/Web/index.md",
+    "docs/Hacking/Web/Cypher Injection.md",
+    "docs/Hacking/Web/Abusing No Redirects.md",
+    "docs/Hacking/Pwn/index.md",
     "docs/CTF/HackTheBox/Machines/index.md",
     "docs/CTF/HackTheBox/Machines",
-    "docs/Hacking/Pwn/index.md",
     "docs/CTF/HackTheBox/Challenges",
     "docs/CTF/HackTheBox/Challenge",
-    "docs/Hacking/Web/Abusing No Redirects.md",
     "docs/Hacking/Web/File Inclusion.md",
     "docs/Tutorials/GitHub Pages with Obsidian.md",
     "docs/Hacking/index.md",
-    "docs/Hacking/Web/index.md",
     "docs/Hacking/Windows/index.md",
     "docs/Hacking/Linux/index.md",
     "docs/Hacking/Active Directory/index.md",
@@ -205,9 +223,6 @@
     "docs/Hacking/Web",
     "docs/CTF/index.md",
     "docs/CTF/HackTheBox/index.md",
-    "docs/Bug Bounty/index.md",
-    "docs/CTF/HackTheBox/AppSanity.md",
-    "docs/⚑CTF/HackTheBox/AppSanity.md",
     "docs/assets/images/logo.png",
     "docs/assets/logo.png",
     "site/assets/images/favicon.png"

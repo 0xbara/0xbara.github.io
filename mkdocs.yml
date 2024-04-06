@@ -35,6 +35,7 @@ theme:
   plugins:
     - projects
     - optimize
+    - tags
   # Colors
   palette:
     # Palette toggle for light mode

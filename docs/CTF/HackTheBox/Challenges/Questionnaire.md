@@ -1,5 +1,7 @@
 ---
 title: Very Easy - Questionnaire
+tags:
+  - pwn
 ---
 **Challenge Description**
 
@@ -51,7 +53,7 @@ RELRO     : Partial
 
 **What is the name of the custom function the gets called inside `main()`? (e.g. vulnerable_function())**
 
-```c
+```c title="test.c"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -1,5 +1,7 @@
 ---
 title: Abusing No Redirects
+tags:
+  - web
 ---
 Imagine we found an application where we try to access the Admin Panel and we receive a `302 Found`. In this case, you can try to change the response to `200 OK`.
 

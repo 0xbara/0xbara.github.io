@@ -1,5 +1,7 @@
 ---
 title: Cypher Injection
+tags:
+  - web
 ---
 
 The query language used to query a neo4j database is called Cypher. It is used to interact with the graph data stored in Neo4j, allowing users to create, retrieve, update, and delete data using a declarative syntax that is similar to SQL.

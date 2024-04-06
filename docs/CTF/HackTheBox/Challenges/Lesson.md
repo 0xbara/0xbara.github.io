@@ -1,5 +1,7 @@
 ---
 title: Very Easy - Lesson
+tags:
+  - pwn
 ---
 **Challenge Description**
 
@@ -33,7 +35,7 @@ RELRO     : FULL
 
 **What do you need to enter so the message 'Welcome admin!' is printed?**
 
-```c
+```c title="main.c"
 #include <stdio.h>
 
 void under_construction(){

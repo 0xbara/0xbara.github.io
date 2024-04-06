@@ -1,5 +1,5 @@
 ---
-title: Hack The Box
+title: Bug Bounty
 icon: simple/hackerone
 ---
 
