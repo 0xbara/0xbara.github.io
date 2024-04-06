@@ -3,7 +3,6 @@ title: Cypher Injection
 tags:
   - web
 ---
-
 The query language used to query a neo4j database is called Cypher. It is used to interact with the graph data stored in Neo4j, allowing users to create, retrieve, update, and delete data using a declarative syntax that is similar to SQL.
 
 If I think that the employee DB is likely hooked up to neo4j, then it’s possible that I could do a cypher injection against it.
@@ -111,7 +110,7 @@ Both of these are non-salted SHA256 hashes, and both are already cracked in [Cr
 
 ![](images/cypher3.webp)
 
-References: 
+**References:** 
 
 * https://0xdf.gitlab.io/2023/08/26/htb-onlyforyou.html#cypher-injection
 * https://app.hackthebox.com/machines/540

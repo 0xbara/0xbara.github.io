@@ -137,6 +137,6 @@ Great job! It's high time you solved your first challenge! Here is the flag!
 
 **HTB{w4rm35t_\*\*\*\*\*\*\_3v3r}**
 
-Reference:
+**Reference:**
 
 - https://app.hackthebox.com/challenges/Lesson

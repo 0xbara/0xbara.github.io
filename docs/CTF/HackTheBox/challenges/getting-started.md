@@ -197,3 +197,6 @@ success(f'Flag --> {r.recvline_contains(b"HTB").strip().decode()}')
 
 **HTB{b0f\_\*\*\*\*\*\*\*\*\_4r3\_g00d}**
 
+**Reference:**
+
+- https://app.hackthebox.com/challenges/Getting%2520Started

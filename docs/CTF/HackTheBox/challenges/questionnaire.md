@@ -162,6 +162,6 @@ Great job! It's high time you solved your first challenge! Here is the flag!
 
 **HTB{l34rn_th3_b451c5_\*\*\*\*\*\*\_u_5t4rt}**
 
-Reference: 
+**Reference:**
 
 - https://app.hackthebox.com/challenges/Questionnaire

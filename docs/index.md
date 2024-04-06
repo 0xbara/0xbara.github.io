@@ -2,7 +2,6 @@
 title: About Me
 icon: octicons/person-16
 ---
-
 # About Me
 
 Hello, I am Agustín Baranowski, but online, I go by the handle of 0xbara. In May of 2022, I found my passion for Cyber Security, and since then, I have been continuously learning and growing in this field. 
