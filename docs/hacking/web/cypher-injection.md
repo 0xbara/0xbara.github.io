@@ -25,7 +25,7 @@ MATCH (e:employee) WHERE e.name CONTAINS '{name}' RETURN e
 
 That would be grabbing `employee` nodes where the name contains our input and returning the nodes.
 
-If that’s the case, I’ll try to see if I can craft a query that loads all the rows. What about `name=0xdf' or '1'='1`? That would make the query:
+If that’s the case, I’ll try to see if I can craft a query that loads all the rows. What about `name=0xbara' or '1'='1`? That would make the query:
 
 ```cypher
 MATCH (e:employee) WHERE e.name CONTAINS '0xbara' or '1'='1' RETURN e
