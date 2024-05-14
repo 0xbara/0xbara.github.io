@@ -1,4 +1,5 @@
 {
   "alwaysUpdateLinks": false,
-  "showUnsupportedFiles": false
+  "showUnsupportedFiles": false,
+  "readableLineLength": false
 }
