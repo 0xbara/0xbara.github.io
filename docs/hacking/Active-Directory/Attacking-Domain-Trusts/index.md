@@ -19,7 +19,7 @@ Trusts can be transitive or non-transitive.
 - A `transitive` trust means that trust is extended to objects that the child domain trusts. For example, let's say we have three domains. In a transitive relationship, if `Domain A` has a trust with `Domain B`, and `Domain B` has a `transitive` trust with `Domain C`, then `Domain A` will automatically trust `Domain C`.
 - In a `non-transitive trust`, the child domain itself is the only one trusted.
 
-![](images/domaintrust.webp)
+![](../images/domaintrust.webp)
 
 Trusts can be set up in two directions: one-way or two-way (bidirectional).
 
