@@ -55,7 +55,7 @@ Starting gobuster in directory enumeration mode
 /music                (Status: 301) [Size: 316] [--> http://10.129.136.167/music/]
 ```
 
-And we got a hit, `/music`. Let's see what's in there
+And we got a hit, `/music`. Let's see what's in there.
 
 ![](../images/openadmin1.png)
 

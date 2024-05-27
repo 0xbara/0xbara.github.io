@@ -8,24 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "981cca6abe94dcc0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "7742eb6ea3a43627",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/CTF/HackTheBox/challenges/getting-started.md",
+                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
                 "mode": "source",
                 "source": false
               }
@@ -170,16 +158,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6e03578bd7486690",
+  "active": "7742eb6ea3a43627",
   "lastOpenFiles": [
+    "docs/CTF/HackTheBox/machines/easy/index.md",
+    "docs/CTF/HackTheBox/challenges/getting-started.md",
+    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
     "docs/CTF/HackTheBox/machines/images/openadmin4.png",
     "docs/CTF/HackTheBox/machines/images/openadmin3.png",
     "docs/CTF/HackTheBox/machines/images/openadmin2.png",
     "docs/CTF/HackTheBox/machines/images/openadmin1.png",
     "docs/CTF/HackTheBox/machines/images",
-    "docs/CTF/HackTheBox/machines/easy/index.md",
     "docs/CTF/HackTheBox/machines/index.md",
-    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
     "docs/CTF/HackTheBox/index.md",
     "docs/CTF/HackTheBox/machines/easy",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts/index.md",
@@ -187,7 +176,6 @@
     "docs/CTF/HackTheBox/challenges/ancient-encodings.md",
     "docs/CTF/HackTheBox/challenges/questionnaire.md",
     "docs/CTF/HackTheBox/challenges/lesson.md",
-    "docs/CTF/HackTheBox/challenges/getting-started.md",
     "docs/hacking/index.md",
     "docs/index.md",
     "docs/Bug-Bounty/index.md",
