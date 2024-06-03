@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/index.md",
+                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/index.md",
+                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/index.md",
+                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/index.md"
+                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md"
               }
             }
           },
@@ -160,6 +160,7 @@
   },
   "active": "7742eb6ea3a43627",
   "lastOpenFiles": [
+    "docs/index.md",
     "docs/Bug-Bounty/index.md",
     "docs/assets/images/logo.png",
     "docs/CTF/HackTheBox/machines/easy/openadmin.md",
@@ -180,7 +181,6 @@
     "docs/CTF/HackTheBox/challenges/questionnaire.md",
     "docs/CTF/HackTheBox/challenges/lesson.md",
     "docs/hacking/index.md",
-    "docs/index.md",
     "docs/CTF/PortSwigger/index.md",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts",
     "docs/hacking/Active-Directory/index.md",

