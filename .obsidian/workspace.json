@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
+                "file": "docs/hacking/Active-Directory/kerberoast.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "da9e98ca20f02d6a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/hacking/Active-Directory/kerberoast.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:Active-Directory",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
+                "file": "docs/hacking/Active-Directory/kerberoast.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md",
+                "file": "docs/hacking/Active-Directory/kerberoast.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/CTF/HackTheBox/machines/easy/openadmin.md"
+                "file": "docs/hacking/Active-Directory/kerberoast.md"
               }
             }
           },
@@ -158,12 +171,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7742eb6ea3a43627",
+  "active": "da9e98ca20f02d6a",
   "lastOpenFiles": [
+    "docs/hacking/Active-Directory/asreproast.md",
+    "docs/hacking/Active-Directory/kerberoast.md",
+    "docs/hacking/Active-Directory/index.md",
+    "docs/hacking/Active-Directory/Attacking-Domain-Trusts/index.md",
+    "docs/CTF/PortSwigger/index.md",
     "docs/index.md",
+    "docs/tutorials/github-pages-with-obsidian.md",
+    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
     "docs/Bug-Bounty/index.md",
     "docs/assets/images/logo.png",
-    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
     "docs/CTF/HackTheBox/machines/easy/index.md",
     "docs/hacking/Active-Directory/images/domaintrust.webp",
     "docs/CTF/HackTheBox/challenges/getting-started.md",
@@ -175,16 +194,12 @@
     "docs/CTF/HackTheBox/machines/index.md",
     "docs/CTF/HackTheBox/index.md",
     "docs/CTF/HackTheBox/machines/easy",
-    "docs/hacking/Active-Directory/Attacking-Domain-Trusts/index.md",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts/golden-ticket-attack.md",
     "docs/CTF/HackTheBox/challenges/ancient-encodings.md",
     "docs/CTF/HackTheBox/challenges/questionnaire.md",
     "docs/CTF/HackTheBox/challenges/lesson.md",
     "docs/hacking/index.md",
-    "docs/CTF/PortSwigger/index.md",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts",
-    "docs/hacking/Active-Directory/index.md",
-    "docs/hacking/Active-Directory/asreproast.md",
     "docs/hacking/web/cypher-injection.md",
     "docs/hacking/Active-Directory/images",
     "docs/assets/images/domaintrust.webp.crdownload",
@@ -195,7 +210,6 @@
     "docs/tutorials/how-to-burp-suite.md",
     "docs/tutorials/how-to-buffer-overflow.md",
     "docs/tutorials/how-to-bloodhound.md",
-    "docs/tutorials/github-pages-with-obsidian.md",
     "docs/hacking/web/images/302bypass.gif",
     "docs/CTF/HackTheBox/machines",
     "docs/CTF/HackTheBox/challenges",

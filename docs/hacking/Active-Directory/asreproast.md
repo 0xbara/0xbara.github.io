@@ -1,5 +1,5 @@
 ---
-title: ASREPRoast Attack
+title: ASREPRoast
 tags:
   - active-directory
 ---
