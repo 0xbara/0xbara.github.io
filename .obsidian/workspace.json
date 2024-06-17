@@ -25,14 +25,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/hacking/Active-Directory/kerberoast.md",
+                "file": "docs/hacking/Active-Directory/groups.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -171,11 +170,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "da9e98ca20f02d6a",
+  "active": "7742eb6ea3a43627",
   "lastOpenFiles": [
-    "docs/hacking/Active-Directory/asreproast.md",
+    "docs/hacking/Active-Directory/groups.md",
     "docs/hacking/Active-Directory/kerberoast.md",
     "docs/hacking/Active-Directory/index.md",
+    "docs/hacking/Active-Directory/asreproast.md",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts/index.md",
     "docs/CTF/PortSwigger/index.md",
     "docs/index.md",
@@ -209,7 +209,6 @@
     "docs/tutorials/how-to-pivoting.md",
     "docs/tutorials/how-to-burp-suite.md",
     "docs/tutorials/how-to-buffer-overflow.md",
-    "docs/tutorials/how-to-bloodhound.md",
     "docs/hacking/web/images/302bypass.gif",
     "docs/CTF/HackTheBox/machines",
     "docs/CTF/HackTheBox/challenges",

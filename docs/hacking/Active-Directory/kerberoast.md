@@ -93,7 +93,7 @@ If an attacker knows of an account for which pre-authentication isn't required (
 
 ## Targeted Kerberoasting
 
-If an attacker controls an account with the rights to add an SPN to another (`GenericAll`, `GenericWrite`), it can be abused to make that other account vulnerable to Kerberoast. A member of the [Account Operator](https://www.thehacker.recipes/ad/movement/domain-settings/builtin-groups) group usually has those permissions.
+If an attacker controls an account with the rights to add an SPN to another (`GenericAll`, `GenericWrite`), it can be abused to make that other account vulnerable to Kerberoast. A member of the [Account Operator](https://0xbara.github.io/hacking/Active-Directory/groups/) group usually has those permissions.
 
 The attacker can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to [Kerberoasting](https://0xbara.github.io/hacking/Active-Directory/kerberoast/). This technique is called Targeted Kerberoasting.
 
