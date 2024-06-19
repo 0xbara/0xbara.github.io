@@ -201,6 +201,7 @@ ACUTE\jmorgan
 Administrator
 ```
 
+## Privilege Escalation
 ### Lateral Movement
 
 We can try to get a reverse shell as `jmorgan` with `meterpreter` by modifying the script.
@@ -286,7 +287,7 @@ acute\awallace
 
 And we got it at the first try! Doing some recon, we find out that there is an script running every 5 minutes under `C:\Program Files\keepmeon\keepmeon.bat`.
 
-### Privilege Escalation
+### Batch File Abuse
 
 ```powershell
 PS:\> Invoke-Command -ComputerName ATSSERVER -ConfigurationName dc_manage -Credential $cred -ScriptBlock {type C:\PROGRA~1\keepmeon\keepmeon.bat}
