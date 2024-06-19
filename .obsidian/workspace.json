@@ -4,28 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "51b50861c20547d3",
+        "id": "8c3ad779a6842eca",
         "type": "tabs",
         "children": [
           {
-            "id": "7742eb6ea3a43627",
+            "id": "8d10223ab666a179",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/hacking/Active-Directory/kerberoast.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "da9e98ca20f02d6a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/hacking/Active-Directory/groups.md",
+                "file": "docs/CTF/HackTheBox/machines/hard/acute.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/hacking/Active-Directory/kerberoast.md",
+                "file": "docs/CTF/HackTheBox/machines/hard/acute.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/hacking/Active-Directory/kerberoast.md",
+                "file": "docs/CTF/HackTheBox/machines/hard/acute.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/hacking/Active-Directory/kerberoast.md"
+                "file": "docs/CTF/HackTheBox/machines/hard/acute.md"
               }
             }
           },
@@ -170,29 +158,37 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7742eb6ea3a43627",
+  "active": "8d10223ab666a179",
   "lastOpenFiles": [
-    "docs/hacking/Active-Directory/groups.md",
+    "docs/CTF/HackTheBox/machines/images/acute10.png",
+    "docs/CTF/HackTheBox/machines/images/acute9.png",
+    "docs/CTF/HackTheBox/machines/images/acute8.png",
+    "docs/CTF/HackTheBox/machines/images/acute7.png",
+    "docs/CTF/HackTheBox/machines/images/acute6.png",
+    "docs/CTF/HackTheBox/machines/images/acute5.png",
+    "docs/CTF/HackTheBox/machines/images/acute4.png",
+    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
+    "docs/CTF/HackTheBox/machines/hard/acute.md",
+    "docs/CTF/HackTheBox/index.md",
+    "docs/CTF/HackTheBox/machines/easy/index.md",
+    "docs/CTF/HackTheBox/machines/hard/index.md",
+    "docs/CTF/HackTheBox/machines/images/acute3.png",
+    "docs/CTF/HackTheBox/machines/images/acute1.png",
+    "docs/CTF/HackTheBox/machines/images/acute2.png",
+    "docs/CTF/HackTheBox/machines/hard",
     "docs/hacking/Active-Directory/kerberoast.md",
+    "docs/hacking/Active-Directory/groups.md",
     "docs/hacking/Active-Directory/index.md",
     "docs/hacking/Active-Directory/asreproast.md",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts/index.md",
     "docs/CTF/PortSwigger/index.md",
     "docs/index.md",
     "docs/tutorials/github-pages-with-obsidian.md",
-    "docs/CTF/HackTheBox/machines/easy/openadmin.md",
     "docs/Bug-Bounty/index.md",
     "docs/assets/images/logo.png",
-    "docs/CTF/HackTheBox/machines/easy/index.md",
-    "docs/hacking/Active-Directory/images/domaintrust.webp",
     "docs/CTF/HackTheBox/challenges/getting-started.md",
-    "docs/CTF/HackTheBox/machines/images/openadmin4.png",
-    "docs/CTF/HackTheBox/machines/images/openadmin3.png",
-    "docs/CTF/HackTheBox/machines/images/openadmin2.png",
-    "docs/CTF/HackTheBox/machines/images/openadmin1.png",
     "docs/CTF/HackTheBox/machines/images",
     "docs/CTF/HackTheBox/machines/index.md",
-    "docs/CTF/HackTheBox/index.md",
     "docs/CTF/HackTheBox/machines/easy",
     "docs/hacking/Active-Directory/Attacking-Domain-Trusts/golden-ticket-attack.md",
     "docs/CTF/HackTheBox/challenges/ancient-encodings.md",
@@ -206,16 +202,9 @@
     "docs/hacking/web/abusing-no-redirects.md",
     "docs/hacking/Active-Directory/a.md",
     "docs/Bug-Bounty/reconassiance.md",
-    "docs/tutorials/how-to-pivoting.md",
-    "docs/tutorials/how-to-burp-suite.md",
-    "docs/tutorials/how-to-buffer-overflow.md",
-    "docs/hacking/web/images/302bypass.gif",
     "docs/CTF/HackTheBox/machines",
     "docs/CTF/HackTheBox/challenges",
     "docs/CTF/HackTheBox/Challenge",
-    "Hacking/Linux/Untitled",
-    "docs/CTF/PortSwigger",
-    "docs/assets/logo.png",
-    "site/assets/images/favicon.png"
+    "Hacking/Linux/Untitled"
   ]
 }

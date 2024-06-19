@@ -7,6 +7,7 @@ tags:
   - sudo
   - gtfobins
   - opennetadmin
+  - linux
 ---
 OpenAdmin is an easy difficulty Linux machine that features an outdated OpenNetAdmin CMS instance. The CMS is exploited to gain a foothold, and subsequent enumeration reveals database credentials. These credentials are reused to move laterally to a low privileged user. This user is found to have access to a restricted internal application. Examination of this application reveals credentials that are used to move laterally to a second user. A sudo misconfiguration is then exploited to gain a root shell.
 
@@ -17,8 +18,8 @@ I started with an Nmap scan:
 ```bash
 ❯ nmap -p- --open --min-rate 5000 -sS -n -Pn -vvv 10.129.136.167
 
-22/ssh
-80/http
+22/tcp
+80/tcp
 
 ❯ nmap -p22,80 -sCV 10.129.136.167
 
