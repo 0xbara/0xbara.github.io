@@ -173,7 +173,7 @@ PS:\> Invoke-Command -ComputerName ATSSERVER -ConfigurationName dc_manage -Crede
 acute\imonks
 ```
 
-Great, we can now execute commands in `ATSSERVER`. After a bit of enumeration, we found that there is a file under `C:\Users\imonks\Desktop` called `wm.ps1`
+Great, we can now execute commands in `ATSSERVER`. After a bit of enumeration, we found that there is a file under `C:\Users\imonks\Desktop` called `wm.ps1`.
 
 ```powershell
 PS:\> Invoke-Command -ComputerName ATSSERVER -ConfigurationName dc_manage -Credential $cred -ScriptBlock {ls C:\Users\imonks\Desktop}
