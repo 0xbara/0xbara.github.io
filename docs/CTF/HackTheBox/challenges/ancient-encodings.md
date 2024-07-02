@@ -3,7 +3,10 @@ title: Very Easy - Ancient Encodings
 tags:
   - crypto
 ---
+**Challenge Description**
+
 Your initialization sequence requires loading various programs to gain the necessary knowledge and skills for your journey. Your first task is to learn the ancient encodings used by the aliens in their communication.
+
 ## Code
 
 ```python
