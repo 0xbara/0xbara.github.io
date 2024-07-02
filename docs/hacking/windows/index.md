@@ -1,5 +1,5 @@
 ---
 title: Windows
-icon: simple/windows10
+icon: material/microsoft-windows
 ---
 ¡Coming Soon!
