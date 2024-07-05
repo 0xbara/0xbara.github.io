@@ -3,7 +3,7 @@ theme:
   logo: assets/images/logo.png
   name: material
   language: en
-  favicon: assets/images/favicon.ico
+  favicon: assets/images/logo.png
   # Icons
   icon:
     previous: fontawesome/solid/angle-left
