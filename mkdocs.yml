@@ -95,3 +95,7 @@ extra:
       link: https://hackerone.com/0xbara
     - icon: simple/linkedin
       link: https://www.linkedin.com/in/agustinbaranowski/
+
+# Javascript
+extra_javascript:
+  - assets/js/main.js
