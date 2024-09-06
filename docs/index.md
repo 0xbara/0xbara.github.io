@@ -17,4 +17,4 @@ I hope that through my work, I can inspire others to explore their interests and
 - E-mail: 0xbara@wearehackerone.com
 - Discord: 0xbara
 
-![](index.js)
+![](main.js)
