@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import md from 'markdown-it'
-import styles from '@/styles/Home.module.css'
 
 export default function Post({ frontmatter, content }) {
   return (

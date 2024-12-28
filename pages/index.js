@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import Link from 'next/link'
-import styles from '@/styles/Home.module.css'
 
 export default function Home({ posts }) {
   return (
