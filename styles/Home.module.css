@@ -166,3 +166,29 @@
       filter: invert();
     }
   }
+
+  .title {
+    color: var(--primary);
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .card {
+    background: var(--foreground);
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    background: var(--primary);
+    color: var(--background);
+  }
+  

@@ -7,19 +7,19 @@ import styles from '@/styles/Home.module.css'
 export default function Home({ posts }) {
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
+      <main>
         <h1 className={styles.title}>Mi Blog</h1>
         <div className={styles.grid}>
           {posts.map((post) => (
-            <Link href={`/posts/${post.slug}`} key={post.slug} className={styles.card}>
+            <div key={post.slug} className={styles.card}>
               <h2>{post.title}</h2>
               <p>{post.date}</p>
-            </Link>
+            </div>
           ))}
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 export async function getStaticProps() {
