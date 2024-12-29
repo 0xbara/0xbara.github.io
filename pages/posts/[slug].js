@@ -3,10 +3,16 @@ import path from 'path';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export default function Post({ frontmatter, content }) {
+  const pageTitle = `${frontmatter.title} | 0xbara`;
+
   return (
     <div className="mainPage">
+      <Head>
+        <title>{pageTitle}</title>
+      </Head>
       <div className="post-content">
         <Link href="/posts" className="back-link">back</Link>
         <h1>{frontmatter.title}</h1>
