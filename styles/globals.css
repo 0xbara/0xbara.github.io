@@ -1,50 +1,178 @@
-:root {
-  --background: #000000;
-  --foreground: #e0e0e0;
-  --primary: #ff4500;
-  --secondary: #32cd32;
-}
-
-html, body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "Courier New", Courier, monospace;
+/* Reset básico */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+html, 
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Base styles */
+.mainPage {
+  font-family: "Courier New", monospace;
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Estilo solo para la página principal */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+  background-color: #000;
+}
+
+/* Título principal de la página de inicio */
+.main h1 {
+  font-size: 3em;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 0 5px #fff;
+  font-weight: normal;
+}
+
+.main p {
+  font-size: 1em;
+  color: #888;
+  margin: 20px 0;
+  max-width: 600px;
+}
+
+/* Links generales */
 a {
-  color: var(--primary);
-  text-decoration: none;
+  color: #fff;
+  text-decoration: underline;
+  transition: opacity 0.3s ease;
 }
 
 a:hover {
-  color: var(--secondary);
-  text-decoration: underline;
+  opacity: 0.7;
 }
 
-h1, h2, h3 {
-  color: var(--primary);
-}
-
-p {
-  line-height: 1.6;
-}
-
-.container {
-  margin: 0 auto;
+/* Estilos específicos para los posts */
+.post-content {
   max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Estilos para imágenes en posts */
+.post-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+}
+
+.post-content p img {
+  margin: 0 auto;
+}
+
+/* Contenedor para imágenes */
+.post-content p:has(img) {
+  text-align: center;
+}
+
+/* Estilos para el contenido Markdown */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  text-align: left;
+  margin: 1.5em 0 0.5em 0;
+  color: #fff;
+}
+
+.post-content h1 {
+  font-size: 2em;
+}
+
+.post-content h2 {
+  font-size: 1.5em;
+}
+
+.post-content p {
+  text-align: left;
+  line-height: 1.6;
+  margin: 1em 0;
+  color: #fff;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.post-content li {
+  margin: 0.5em 0;
+}
+
+.post-content code {
+  background-color: #1a1a1a;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+}
+
+.post-content pre {
+  background-color: #1a1a1a;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.post-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.post-content blockquote {
+  border-left: 3px solid #333;
+  margin: 1em 0;
+  padding-left: 1em;
+  color: #888;
+}
+
+/* Lista de posts */
+.posts-container {
+  max-width: 800px;
+  margin: 40px auto;
   padding: 20px;
 }
 
-button {
-  background-color: var(--primary);
-  color: var(--background);
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+.post-entry {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #333;
+  background: #111;
 }
 
-button:hover {
-  background-color: var(--secondary);
+.post-entry h2 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.post-date {
+  color: #666;
+  font-size: 0.9em;
+  margin: 5px 0;
 }
